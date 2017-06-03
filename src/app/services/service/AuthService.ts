@@ -31,7 +31,7 @@ export class AuthService{
         }
         //失敗顯示登入失敗
         else{
-          alert(data.message) ;
+          alert(data.msg) ;
         }
 
       },
