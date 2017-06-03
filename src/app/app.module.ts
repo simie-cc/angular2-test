@@ -1,8 +1,13 @@
+//以下是內建
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
+//以下是第三方
+import { LocalStorageModule, LocalStorageService } from 'angular-2-local-storage';
+
+//以下是專案相關
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { ServiceBroker } from "app/services/servicebroker/ServiceBroker";
@@ -18,9 +23,17 @@ import { AppRoutingModule } from "app/app.routing.module";
     BrowserModule,
     FormsModule,
     HttpModule,
-    AppRoutingModule
+    AppRoutingModule,
+    LocalStorageModule.withConfig({
+      prefix: 'ictinv-app',
+      storageType: 'localStorage'
+    }),
   ],
-  providers: [ServiceBroker,RestTemplate],
+  providers: [
+    ServiceBroker,
+    RestTemplate,
+    LocalStorageService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

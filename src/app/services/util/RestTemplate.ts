@@ -3,14 +3,15 @@ import {Headers, Http, RequestOptions, Response} from '@angular/http';
 import { Injectable } from "@angular/core";
 import 'rxjs/Rx';
 import {Observable} from 'rxjs';
+import { LocalStorageService } from "angular-2-local-storage";
 
 @Injectable()
 export class RestTemplate{
 
-  constructor( private http: Http ) { }
+  constructor( private http: Http,private localStorage: LocalStorageService ) { }
 
    doGenHeaders() {
-    let token = '';//this.localStorage.get('access-token');
+    let token = this.localStorage.get('access-token');
     let auth_token = 'Bearer ' + token;
     let headers = new Headers({'Content-Type': 'application/json; charset=UTF-8', 'Authorization': auth_token});
     //console.log(headers);

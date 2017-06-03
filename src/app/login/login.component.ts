@@ -5,7 +5,7 @@ import { NgForm } from '@angular/forms';
 import { ServiceBroker } from "app/services/servicebroker/ServiceBroker";
 import 'rxjs/Rx';
 import {Observable} from 'rxjs';
-import { ApiJwtAuthHandler } from "app/services/api/ApiJwtAuthHandler";
+import { AuthService } from "app/services/service/AuthService";
 
 @Component({
   selector: 'login',
@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
 
   public loginUser: LoginUser = new LoginUser() ;
 
-  constructor(private service:ServiceBroker) { }
+  constructor(private authService:AuthService) { }
 
   ngOnInit() {
     if(!environment.production){
@@ -27,10 +27,7 @@ export class LoginComponent implements OnInit {
 
   doLogin(loginForm:NgForm){
     console.log('submit:'+JSON.stringify(loginForm.value)) ;
-    let authHandler:ApiJwtAuthHandler = this.service.getApiHandler(ApiJwtAuthHandler) ;
-    authHandler.auth(loginForm.value).subscribe(
-      (data:any) => console.log(data)
-    ) ;
+    this.authService.auth(loginForm.value) ;
   }
 
 }
