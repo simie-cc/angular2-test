@@ -20,6 +20,7 @@
       "prefix": "app",
       "styles": [
         "styles.css",
+        "ie10-viewport-bug-workaround.css",
         "../node_modules/bootstrap/dist/css/bootstrap.min.css"
       ],
       "scripts": [],

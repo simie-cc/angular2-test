@@ -14,7 +14,7 @@ export class ServiceBroker{
 
   constructor(private restTemplate: RestTemplate){}
 
-  getBroker<T>(clazz:Constructor<T>): T {
+  getApiHandler<T>(clazz:Constructor<T>): T {
 
     let rest = this.restTemplate ;
 
@@ -50,6 +50,13 @@ export class ServiceBroker{
               }else if(httpMethod === HttpMethod.POST){
                   console.log('call post method:'+fullUrl+', and data:'+args[0]) ;
                   return rest.post(fullUrl,args[0]) ;
+              }else if(httpMethod === HttpMethod.PUT){
+                  console.log('call put method:'+fullUrl+', and data:'+args[0]) ;
+                  return rest.put(fullUrl,args[0]) ;
+              }else if(httpMethod === HttpMethod.GET){
+                  args.forEach( (arg,idx)=> fullUrl=fullUrl.replace(`{${idx}}`,arg) )
+                  console.log('call delete method:'+fullUrl) ;
+                  return rest.delete(fullUrl) ;
               }
 
           };

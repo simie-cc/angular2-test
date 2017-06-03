@@ -4,7 +4,7 @@ import 'rxjs/Rx';
 import {Observable} from 'rxjs';
 
 @RestHandler({ baseUrl: "/api" })
-export class HelloWorld{
+export class ApiHelloWorldHandler{
 
   @RequestMapping({path:"/hello/{0}/",method:HttpMethod.GET})
   helloGet(word:string):Observable<any>{return null}
