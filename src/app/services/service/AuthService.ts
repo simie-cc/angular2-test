@@ -19,13 +19,20 @@ export class AuthService{
 
         this.localStorage.set('access-token', data.token);
 
-        // console.log('============token information=============');
-        // console.log('access-token:'+this.localStorage.get('access-token')) ;
-        // console.log('decodeToken:'+JSON.stringify(this.jwt.decodeToken(data.token)));
-        // console.log('token expire date:'+this.jwt.getTokenExpirationDate(data.token));
-        // console.log('token is expired:'+this.jwt.isTokenExpired(data.token));
+
 
         //成功後導頁
+        if(data.success){
+          console.log('============token information=============');
+          console.log('access-token:'+this.localStorage.get('access-token')) ;
+          console.log('decodeToken:'+JSON.stringify(this.jwt.decodeToken(data.token)));
+          console.log('token expire date:'+this.jwt.getTokenExpirationDate(data.token));
+          console.log('token is expired:'+this.jwt.isTokenExpired(data.token));
+        }
+        //失敗顯示登入失敗
+        else{
+          alert(data.message) ;
+        }
 
       },
       (error) =>{
