@@ -5,7 +5,7 @@
 
 export const environment = {
   production: false,
-  apiserver: 'http://localhost:3000',
-  //apiserver: http://localhost:3000
-  //apiserver: http://10.144.94.76:8080
+  // apiserver: 'http://localhost:3000',
+  apiserver: 'http://localhost:8080'
+  // apiserver: 'http://10.144.94.76:8080'
 };
