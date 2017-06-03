@@ -14,6 +14,7 @@ import { ServiceBroker } from "app/services/servicebroker/ServiceBroker";
 import { RestTemplate } from "app/services/util/RestTemplate";
 import { AppRoutingModule } from "app/app.routing.module";
 import { AuthService } from "app/services/service/AuthService";
+import { JwtHelper } from "angular2-jwt";
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { AuthService } from "app/services/service/AuthService";
     ServiceBroker,
     RestTemplate,
     AuthService,
-    LocalStorageService
+    LocalStorageService,
+    JwtHelper
   ],
   bootstrap: [AppComponent]
 })
