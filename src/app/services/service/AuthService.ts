@@ -18,9 +18,11 @@ export class AuthService{
 
         this.localStorage.set('access-token', data.token);
 
-        console.log(this.jwt.decodeToken(data.token));
-        console.log(this.jwt.getTokenExpirationDate(data.token));
-        console.log(this.jwt.isTokenExpired(data.token));
+        console.log('============token information=============');
+        console.log('access-token:'+this.localStorage.get('access-token')) ;
+        console.log('decodeToken:'+JSON.stringify(this.jwt.decodeToken(data.token)));
+        console.log('token expire date:'+this.jwt.getTokenExpirationDate(data.token));
+        console.log('token is expired:'+this.jwt.isTokenExpired(data.token));
 
       }
     ) ;
