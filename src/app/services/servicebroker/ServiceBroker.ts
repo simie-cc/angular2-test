@@ -66,15 +66,6 @@ export class ServiceBroker{
 
   }
 
-  private parsePath(path:string,args:any[]):string{
-    return path.split(/({\w+})/)
-        .map( (p,index) => {
-
-            return args[index]
-
-        }).join('');
-  }
-
   private getHostUri():string {
     return environment.apiserver ;
   }
