@@ -48,10 +48,10 @@ export class ServiceBroker{
                   console.log('call get method:'+fullUrl) ;
                   return rest.get(fullUrl) ;
               }else if(httpMethod === HttpMethod.POST){
-                  console.log('call post method:'+fullUrl+', and data:'+args[0]) ;
+                  console.log('call post method:'+fullUrl+', and data:'+JSON.stringify(args[0])) ;
                   return rest.post(fullUrl,args[0]) ;
               }else if(httpMethod === HttpMethod.PUT){
-                  console.log('call put method:'+fullUrl+', and data:'+args[0]) ;
+                  console.log('call put method:'+fullUrl+', and data:'+JSON.stringify(args[0])) ;
                   return rest.put(fullUrl,args[0]) ;
               }else if(httpMethod === HttpMethod.GET){
                   args.forEach( (arg,idx)=> fullUrl=fullUrl.replace(`{${idx}}`,arg) )

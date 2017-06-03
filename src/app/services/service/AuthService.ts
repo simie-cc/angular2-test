@@ -15,20 +15,21 @@ export class AuthService{
     let authHandler:ApiJwtAuthHandler = this.sb.getApiHandler(ApiJwtAuthHandler) ;
     authHandler.auth(loginUser).subscribe(
       (data:LoginUser) => {
+        console.log('received data:'+JSON.stringify(data)) ;
 
         this.localStorage.set('access-token', data.token);
 
-        console.log('============token information=============');
-        console.log('access-token:'+this.localStorage.get('access-token')) ;
-        console.log('decodeToken:'+JSON.stringify(this.jwt.decodeToken(data.token)));
-        console.log('token expire date:'+this.jwt.getTokenExpirationDate(data.token));
-        console.log('token is expired:'+this.jwt.isTokenExpired(data.token));
+        // console.log('============token information=============');
+        // console.log('access-token:'+this.localStorage.get('access-token')) ;
+        // console.log('decodeToken:'+JSON.stringify(this.jwt.decodeToken(data.token)));
+        // console.log('token expire date:'+this.jwt.getTokenExpirationDate(data.token));
+        // console.log('token is expired:'+this.jwt.isTokenExpired(data.token));
 
         //成功後導頁
 
       },
       (error) =>{
-        console.log(error) ;
+        console.log('error occur:'+error) ;
       }
 
     ) ;
