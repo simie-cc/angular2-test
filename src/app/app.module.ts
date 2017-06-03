@@ -13,6 +13,7 @@ import { LoginComponent } from './login/login.component';
 import { ServiceBroker } from "app/services/servicebroker/ServiceBroker";
 import { RestTemplate } from "app/services/util/RestTemplate";
 import { AppRoutingModule } from "app/app.routing.module";
+import { AuthService } from "app/services/service/AuthService";
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { AppRoutingModule } from "app/app.routing.module";
   providers: [
     ServiceBroker,
     RestTemplate,
+    AuthService,
     LocalStorageService
   ],
   bootstrap: [AppComponent]
