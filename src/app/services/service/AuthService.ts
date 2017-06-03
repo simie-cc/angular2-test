@@ -24,7 +24,13 @@ export class AuthService{
         console.log('token expire date:'+this.jwt.getTokenExpirationDate(data.token));
         console.log('token is expired:'+this.jwt.isTokenExpired(data.token));
 
+        //成功後導頁
+
+      },
+      (error) =>{
+        console.log(error) ;
       }
+
     ) ;
   }
 }
