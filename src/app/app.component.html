@@ -1,1 +1,7 @@
-<router-outlet></router-outlet>
+<block-ui>
+
+  <menu *ngIf="isAuth() && hasLogin()"></menu>
+
+  <router-outlet></router-outlet>
+
+</block-ui>

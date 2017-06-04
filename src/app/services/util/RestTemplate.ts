@@ -2,8 +2,10 @@ import {Headers, Http, RequestOptions, Response} from '@angular/http';
 
 import { Injectable } from "@angular/core";
 import 'rxjs/Rx';
-import {Observable} from 'rxjs';
+import { Observable, Subscriber } from 'rxjs';
 import { LocalStorageService } from "angular-2-local-storage";
+import { TeardownLogic } from "rxjs/Subscription";
+import { Wove } from "aspect.js";
 
 @Injectable()
 export class RestTemplate{
@@ -22,26 +24,34 @@ export class RestTemplate{
     return options;
   }
 
-  get(url: string): Observable<any>{
+  get(url: string,timout:number): Observable<any>{
+    let t = timout ;
     return this.http.get(url, this.doGenHeaders())
+      .timeout(t)
       .map((res)=>res.json())
       .catch(this.handleError);
   }
 
-  post(url:string,data:string): Observable<any>{
+  post(url:string,data:string,timout:number): Observable<any>{
+    let t = timout ;
     return this.http.post(url, data, this.doGenHeaders())
+    .timeout(t)
     .map((res) => res.json())
     .catch(this.handleError);
   }
 
-  put(url:string,data:string): Observable<any>{
+  put(url:string,data:string,timout:number): Observable<any>{
+    let t = timout ;
     return this.http.put(url, data, this.doGenHeaders())
+    .timeout(t)
     .map((res) => res.json())
     .catch(this.handleError);
   }
 
-  delete(url: string): Observable<any>{
+  delete(url: string,timout:number): Observable<any>{
+    let t = timout ;
     return this.http.get(url, this.doGenHeaders())
+      .timeout(t)
       .map((res)=>res.json())
       .catch(this.handleError);
   }
@@ -60,5 +70,6 @@ export class RestTemplate{
     console.error(errMsg);
     return Observable.throw(errMsg);
   }
+
 
 }

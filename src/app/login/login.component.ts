@@ -14,14 +14,13 @@ import { AuthService } from "app/services/service/AuthService";
 })
 export class LoginComponent implements OnInit {
 
-  public loginUser: LoginUser = new LoginUser() ;
-
   constructor(private authService:AuthService) { }
 
   ngOnInit() {
+    //測試環境
     if(!environment.production){
-       this.loginUser.name = "800846" ;
-       this.loginUser.password = "800846" ;
+       this.authService.loginUser.name = "800846" ;
+       this.authService.loginUser.password = "800846" ;
     }
   }
 
@@ -29,5 +28,6 @@ export class LoginComponent implements OnInit {
     console.log('submit:'+JSON.stringify(loginForm.value)) ;
     this.authService.auth(loginForm.value) ;
   }
+
 
 }

@@ -5,6 +5,7 @@ export class LoginUser{
   public token?:string ;
   public success?:boolean;
   public msg?:string;
+  public roles?:{code:string,name:string}[];
     constructor(){
 
     }

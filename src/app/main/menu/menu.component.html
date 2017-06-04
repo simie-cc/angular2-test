@@ -1,0 +1,85 @@
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" (click)="toggle=!toggle">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" >ICT Inventory</a>
+    </div>
+    <div class="collapse navbar-collapse" [ngClass]="{'in': toggle}" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li><a routerLink="dashboard"><icon p="home"></icon>首頁</a></li>
+        <li class="dropdown" submenu>
+          <a class="dropdown-toggle"><icon p="hdd"></icon>資產管理 <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a >資產登打</a></li>
+            <li><a routerLink="asset">終端設備查改</a></li>
+            <li><a >資產關係維護</a></li>
+          </ul>
+        </li>
+        <li class="dropdown" submenu>
+          <a class="dropdown-toggle"><icon p="home"></icon>機房管理 <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a >機房設備查改</a></li>
+            <li><a >機房設備進駐</a></li>
+            <li><a >機房設備移出(報廢)</a></li>
+            <li><a >機房設備移轉</a></li>
+          </ul>
+        </li>
+        <li class="dropdown" submenu>
+          <a class="dropdown-toggle">資訊系統管理 <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a >資訊系統(原ISDB)</a></li>
+          </ul>
+        </li>
+        <li class="dropdown" submenu>
+          <a class="dropdown-toggle"><icon p="lock"></icon>資安管理 <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a >安全堡壘查改</a></li>
+            <li><a >安全堡壘進駐</a></li>
+            <li><a >安全堡壘移出</a></li>
+          </ul>
+        </li>
+        <li><a>軟體授權管理</a></li>
+        <li class="dropdown" submenu>
+          <a class="dropdown-toggle"><icon p="stats"></icon>統計報表 <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a >IRMAS未安裝率</a></li>
+            <li><a >設備統計(組織單位X場域)</a></li>
+            <li><a >設備統計(場域X組織單位)</a></li>
+            <li><a >機房設備使用/閒置率</a></li>
+          </ul>
+        </li>
+        <li class="dropdown" submenu>
+          <a class="dropdown-toggle"><icon p="check"></icon>審核中心 <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a >待辦事項</a></li>
+          </ul>
+        </li>
+        <li class="dropdown" submenu>
+          <a class="dropdown-toggle"><icon p="wrench"></icon>系統維運 <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a >角色管理</a></li>
+            <li><a >帳號管理</a></li>
+            <li><a >規格設定管理</a></li>
+          </ul>
+        </li>
+
+
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown" submenu>
+          <a class="dropdown-toggle"><icon p="user"></icon>{{authService.loginUser?.roles[0].name}} <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li *ngFor="let item of authService.loginUser?.roles;let i=index;let f=first"><a >{{item.name}}</a></li>
+          </ul>
+        </li>
+
+        <li><a><icon p="bullhorn"></icon>通知</a></li>
+        <li><a style="cursor: pointer" (click)="logout()"><icon p="log-out"></icon>登出</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>

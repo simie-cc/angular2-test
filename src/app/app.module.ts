@@ -6,6 +6,7 @@ import { HttpModule } from '@angular/http';
 
 //以下是第三方
 import { LocalStorageModule, LocalStorageService } from 'angular-2-local-storage';
+import { BlockUIModule } from 'ng-block-ui';
 
 //以下是專案相關
 import { AppComponent } from './app.component';
@@ -15,11 +16,24 @@ import { RestTemplate } from "app/services/util/RestTemplate";
 import { AppRoutingModule } from "app/app.routing.module";
 import { AuthService } from "app/services/service/AuthService";
 import { JwtHelper } from "angular2-jwt";
+import { MenuComponent } from './main/menu/menu.component';
+import { SubMenuDirective } from './main/menu/submenu.directive';
+import { GlyphiconComponent } from './glyphicon/glyphicon.component';
+import { DashboardComponent } from './main/dashboard/dashboard.component';
+import { AssetComponent } from './main/asset/asset.component';
+import { AssetRegistryComponent } from './main/asset/asset-registry.component';
+import { AuthGuard } from "app/services/service/AuthGuard";
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    MenuComponent,
+    SubMenuDirective,
+    GlyphiconComponent,
+    DashboardComponent,
+    AssetComponent,
+    AssetRegistryComponent
   ],
   imports: [
     BrowserModule,
@@ -30,14 +44,18 @@ import { JwtHelper } from "angular2-jwt";
       prefix: 'ictinv-app',
       storageType: 'localStorage'
     }),
+    BlockUIModule
   ],
   providers: [
     ServiceBroker,
     RestTemplate,
     AuthService,
+    AuthGuard,
     LocalStorageService,
     JwtHelper
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+
+}
