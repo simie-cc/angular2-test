@@ -5,6 +5,8 @@ import { ControlValueAccessor,NG_VALUE_ACCESSOR } from "@angular/forms";
 /**
  *  reference: http://blog.csdn.net/u010730126/article/details/70799099,
                https://dotblogs.com.tw/kinanson/2017/04/15/211606
+
+    動態顯示不同種類的元件
  */
 
 const noop = () => { };

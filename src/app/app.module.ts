@@ -29,6 +29,8 @@ import { RestTemplate } from "app/services/util/RestTemplate";
 import { CiSearchComponent } from './shared/ci-search/ci-search.component';
 import { GlyphiconComponent } from './shared/glyphicon/glyphicon.component';
 import { DynamicHtmlComponent } from './shared/dynamic-html/dynamic-html.component';
+import { CiTableComponent } from './shared/ci-table/ci-table.component';
+import { LdapMenuComponent } from './shared/ldap-menu/ldap-menu.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,9 @@ import { DynamicHtmlComponent } from './shared/dynamic-html/dynamic-html.compone
     AssetComponent,
     AssetRegistryComponent,
     CiSearchComponent,
-    DynamicHtmlComponent
+    DynamicHtmlComponent,
+    CiTableComponent,
+    LdapMenuComponent
   ],
   imports: [
     BrowserModule,

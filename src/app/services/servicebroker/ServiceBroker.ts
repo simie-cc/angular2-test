@@ -5,7 +5,6 @@ import { RestTemplate } from "app/services/util/RestTemplate";
 import { HttpMethod } from "app/services/servicebroker/HttpMethod";
 import 'rxjs/Rx';
 import {Observable} from 'rxjs';
-import { Wove } from "aspect.js";
 //這裡不須import 'reflect-metadata';，多次import會死掉，所以移至 ployfill.ts 統一 import
 
 type Constructor<T> = Function & { prototype: T };
