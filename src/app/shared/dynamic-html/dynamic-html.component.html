@@ -1,31 +1,65 @@
 <ng-template [ngIf]="dynamicType == 'InputText'">
   <div class="input-group">
     <span class="input-group-addon"><i [class]="icon_clazz"></i>{{label}}</span>
-    <input class="form-control" [id]="id" [name]="name" [placeholder]="placeholder" type="text" [value]="value" (input)="input($event)"  [required]="required" />
+    <input class="form-control" [id]="id" [name]="name" [placeholder]="placeholder" type="text" [value]="value" (blur)="blur($event)"  [required]="required" [disabled]="disabled" />
   </div>
 </ng-template>
 
+<!--
+  基本使用方式:
+  <dynamic-html label="測試一下" dynamicType="InputText" name="test1" ngModel required></dynamic-html>
+  綁定值:
+  <dynamic-html label="測試一下" dynamicType="InputText" name="test1" [(ngModel)]="ComponentAttribute" required></dynamic-html>
+  預設值:
+  <dynamic-html label="測試一下" dynamicType="InputText" name="test1" [(ngModel)]="123" required></dynamic-html>
+  綁定事件:
+  <dynamic-html label="測試一下" dynamicType="InputText" name="test1" ngModel required (blur)="handle($event)"></dynamic-html>
+  在Component中設定
+  handle(e){
+    console.log(e.target.value)
+  }
+-->
+
+<ng-template [ngIf]="dynamicType == 'InputPasswordText'">
+  <div class="input-group">
+    <span class="input-group-addon"><i [class]="icon_clazz"></i>{{label}}</span>
+    <input class="form-control" [id]="id" [name]="name" [placeholder]="placeholder" type="password" [value]="value" (blur)="blur($event)"  [required]="required" [disabled]="disabled" />
+  </div>
+</ng-template>
 
 <ng-template [ngIf]="dynamicType == 'SelectOneMenu'">
   <div class="input-group">
     <span class="input-group-addon"><i [class]="icon_clazz"></i>{{label}}</span>
-    <select [name]="name" [id]="id" [(ngModel)]="selected" (change)="changeSelectOne($event)" class="form-control">
+    <select class="form-control" [name]="name" [id]="id" [(ngModel)]="selected" (change)="changeSelectOne($event)" [disabled]="disabled" [required]="required">
       <option *ngFor="let option of options" [ngValue]="option">{{option.name}}</option>
     </select>
   </div>
 </ng-template>
 
-
-
-
-
-
+<!--
+  基本使用方式
+  <dynamic-html label="測試一下" dynamicType="SelectOneMenu" [options]="options" name="test2" ngModel></dynamic-html>
+  綁定預設值:
+  <dynamic-html label="測試一下" dynamicType="SelectOneMenu" [options]="options" name="test2" [(ngModel)]="sss"></dynamic-html>
+  在Component中設定
+  private options=[{code:'1',name:'A'},{code:'2',name:'B'},{code:'3',name:'C'},{code:'4',name:'D'}];
+  private sss=this.options[1]; //一定要參考到options裡，不可自行定義相同值
+  綁定事件:
+  <dynamic-html label="測試一下" dynamicType="SelectOneMenu" [options]="options" name="test2" ngModel (change)="handle($event)"></dynamic-html>
+  這裡的event.target會是<select>本身，非option，可透過e.target.selectedIndex自行到options取得
+-->
 
 <ng-template [ngIf]="dynamicType == 'SelectManyMenu'">
   <div class="input-group">
     <span class="input-group-addon"><i [class]="icon_clazz"></i>{{label}}</span>
-    <select [name]="name" [id]="id" [(ngModel)]="selects" multiple class="form-control" (change)="changeSelectMany($event)" >
+    <select class="form-control" [name]="name" [id]="id" [(ngModel)]="selects"  (click)="changeSelectMany($event)" multiple [disabled]="disabled" [required]="required">
       <option *ngFor="let option of options" [ngValue]="option">{{option.name}}</option>
     </select>
   </div>
 </ng-template>
+
+<!--
+  基本使用方式:
+  <dynamic-html label="測試一下" dynamicType="SelectManyMenu" [options]="options" name="test3" ngModel required></dynamic-html>
+  其它同SelectOneMenu方法
+-->
