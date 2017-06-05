@@ -6,6 +6,8 @@ import { ServiceBroker } from "app/services/servicebroker/ServiceBroker";
 import 'rxjs/Rx';
 import {Observable} from 'rxjs';
 import { AuthService } from "app/services/service/AuthService";
+import { CodeName } from "app/vo/CodeName";
+import { ApiUserHandler } from "app/services/api/ApiUserHandler";
 
 @Component({
   selector: 'login',
@@ -14,20 +16,48 @@ import { AuthService } from "app/services/service/AuthService";
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private authService:AuthService) { }
+  roleMenu:CodeName[] ;
+  roleSelect:CodeName[]=[] ;
+
+  constructor(private authService:AuthService,private sb:ServiceBroker,) { }
 
   ngOnInit() {
     //測試環境
     if(!environment.production){
-       this.authService.loginUser.name = "800846" ;
-       this.authService.loginUser.password = "800846" ;
+       this.authService.user.name = "800846" ;
+       this.authService.user.password = "800846" ;
     }
+
+    let userHandler = this.sb.getApiHandler(ApiUserHandler);
+
+    userHandler.getAllRoles().subscribe(
+      (roles:CodeName[]) =>{
+        this.roleMenu = roles ;
+      },
+      (err)=> console.log(err)
+    );
+
   }
 
   doLogin(loginForm:NgForm){
-    console.log('submit:'+JSON.stringify(loginForm.value)) ;
+    if(this.roleSelect.length>0) this.authService.user.roles = this.roleSelect ;
     this.authService.auth(loginForm.value) ;
   }
 
+  clickRole(btn:HTMLButtonElement){
+    let selected = btn.className==='btn btn-default' ;
+    btn.className = selected ? 'btn btn-primary' : 'btn btn-default' ;
+    // console.log(typeof btn.value) ; //string
+    let role = JSON.parse(btn.value) ;
+    if(selected){  //這次要選
+      if(this.roleSelect.indexOf(role)<0){ //如果不存在就加入
+        this.roleSelect.push(role) ;
+        this.roleSelect = [...this.roleSelect] ;
+      }
+    }else{ //這次要取消
+      this.roleSelect = this.roleSelect.filter(x=>{ return role.code==x.code }) ;
+    }
+
+  }
 
 }

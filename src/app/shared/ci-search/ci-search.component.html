@@ -1,0 +1,46 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <icon p="search"></icon>  查詢區塊
+  </div>
+  <div class="panel-body">
+
+    <form #f="ngForm" (submit)="test(f)">
+        <div class="form-group">
+
+
+            <div class="input-group">
+                <span class="input-group-addon">員工編號</span>
+                <input class="form-control" placeholder="員工編號" type="text" id="name" name="name" required/>
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon">LDAP密碼</span>
+                <input class="form-control" placeholder="LDAP密碼" type="password" id="password" name="password" required/>
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon">LDAP密碼</span>
+                <select class="form-control" multiple id="sel1">
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                </select>
+            </div>
+
+
+          <div>
+            <br>
+            <div class="alert alert-danger" role="alert">error message</div>
+          </div>
+          <hr>
+          <div align="center">
+            <button class="btn btn-success" type="submit">查詢</button>
+          </div>
+
+          <dynamic-html label="測試一下" dynamicType="InputText" name="test1" ngModel (input)="testInput($event)" ></dynamic-html>
+          <dynamic-html label="測試一下" dynamicType="SelectOneMenu" [options]="options" name="test2" (change)="changeSelectOne($event)" ngModel></dynamic-html>
+
+        </div>
+    </form>
+
+  </div>
+</div>

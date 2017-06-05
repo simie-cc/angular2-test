@@ -1,0 +1,31 @@
+<ng-template [ngIf]="dynamicType == 'InputText'">
+  <div class="input-group">
+    <span class="input-group-addon"><i [class]="icon_clazz"></i>{{label}}</span>
+    <input class="form-control" [id]="id" [name]="name" [placeholder]="placeholder" type="text" [value]="value" (input)="input($event)"  [required]="required" />
+  </div>
+</ng-template>
+
+
+<ng-template [ngIf]="dynamicType == 'SelectOneMenu'">
+  <div class="input-group">
+    <span class="input-group-addon"><i [class]="icon_clazz"></i>{{label}}</span>
+    <select [name]="name" [id]="id" [(ngModel)]="selected" (change)="changeSelectOne($event)" class="form-control">
+      <option *ngFor="let option of options" [ngValue]="option">{{option.name}}</option>
+    </select>
+  </div>
+</ng-template>
+
+
+
+
+
+
+
+<ng-template [ngIf]="dynamicType == 'SelectManyMenu'">
+  <div class="input-group">
+    <span class="input-group-addon"><i [class]="icon_clazz"></i>{{label}}</span>
+    <select [name]="name" [id]="id" [(ngModel)]="selects" multiple class="form-control" (change)="changeSelectMany($event)" >
+      <option *ngFor="let option of options" [ngValue]="option">{{option.name}}</option>
+    </select>
+  </div>
+</ng-template>

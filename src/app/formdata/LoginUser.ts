@@ -1,3 +1,4 @@
+import {CodeName} from "app/vo/CodeName";
 export class LoginUser{
 
   public name:string ;
@@ -5,7 +6,7 @@ export class LoginUser{
   public token?:string ;
   public success?:boolean;
   public msg?:string;
-  public roles?:{code:string,name:string}[];
+  public roles?:CodeName[];
     constructor(){
 
     }

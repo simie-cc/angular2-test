@@ -14,7 +14,7 @@
         <li class="dropdown" submenu>
           <a class="dropdown-toggle"><icon p="hdd"></icon>資產管理 <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a >資產登打</a></li>
+            <li><a routerLink="asset-registry">資產登打</a></li>
             <li><a routerLink="asset">終端設備查改</a></li>
             <li><a >資產關係維護</a></li>
           </ul>
@@ -71,13 +71,13 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown" submenu>
-          <a class="dropdown-toggle"><icon p="user"></icon>{{authService.loginUser?.roles[0].name}} <span class="caret"></span></a>
+          <a class="dropdown-toggle"><icon p="user"></icon>{{authService.user?.roles[0].name}} <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li *ngFor="let item of authService.loginUser?.roles;let i=index;let f=first"><a >{{item.name}}</a></li>
+            <li *ngFor="let item of authService.user?.roles;let i=index;let f=first"><a >{{item.name}}</a></li>
           </ul>
         </li>
 
-        <li><a><icon p="bullhorn"></icon>通知</a></li>
+        <li><a><icon p="bullhorn"></icon>通知<span class="badge">5</span></a></li>
         <li><a style="cursor: pointer" (click)="logout()"><icon p="log-out"></icon>登出</a></li>
       </ul>
     </div>

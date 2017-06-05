@@ -9,15 +9,16 @@
 
           <div class="input-group">
               <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-              <input class="form-control" placeholder="員工編號" type="text" id="name" name="name" [ngModel]="authService.loginUser.name" required/>
+              <input class="form-control" placeholder="員工編號" type="text" id="name" name="name" [ngModel]="authService.user.name" required />
           </div>
           <div class="input-group">
               <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-              <input class="form-control" placeholder="LDAP密碼" type="password" id="password" name="password" [ngModel]="authService.loginUser.password" required/>
+              <input class="form-control" placeholder="LDAP密碼" type="password" id="password" name="password" [ngModel]="authService.user.password" required/>
           </div>
-          <div class="input-group">
-              <span class="input-group-addon"><i class="glyphicon glyphicon-education"></i></span>
-
+          <h4><span *ngIf="roleMenu" class="label label-success" style="display:block" role="info">若不選擇角色，則會實際以後端API回應之角色為主</span></h4>
+          <h4><span *ngIf="!roleMenu" class="label label-warning" style="display:block" role="info">取不到角色清單</span></h4>
+          <div *ngFor="let role of roleMenu;let idx=index" class="btn-group"  role="group" >
+                <button type="button" class="btn btn-default" #rolebtn (click)="clickRole($event.target)" value={{role|json}} >{{idx}}.{{role?.name}}</button>&nbsp;
           </div>
 
           <div *ngIf="(authService.uiErrorMsg)" >
@@ -26,14 +27,14 @@
           </div>
           <hr>
           <div align="center">
-            <button class="btn btn-primary" type="submit" [disabled]="!loginForm.valid">登入</button>
+            <button class="btn btn-success" type="submit" [disabled]="!loginForm.valid">登入</button>
           </div>
+
 
 
         </div>
       </form>
     </div>
   </div>
-
 
 </div>

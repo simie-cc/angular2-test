@@ -7,22 +7,28 @@ import { HttpModule } from '@angular/http';
 //以下是第三方
 import { LocalStorageModule, LocalStorageService } from 'angular-2-local-storage';
 import { BlockUIModule } from 'ng-block-ui';
+import { JwtHelper } from "angular2-jwt";
 
-//以下是專案相關
+//以下是業務功能相關
+import { AppRoutingModule } from "app/app.routing.module";
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
-import { ServiceBroker } from "app/services/servicebroker/ServiceBroker";
-import { RestTemplate } from "app/services/util/RestTemplate";
-import { AppRoutingModule } from "app/app.routing.module";
-import { AuthService } from "app/services/service/AuthService";
-import { JwtHelper } from "angular2-jwt";
 import { MenuComponent } from './main/menu/menu.component';
 import { SubMenuDirective } from './main/menu/submenu.directive';
-import { GlyphiconComponent } from './glyphicon/glyphicon.component';
 import { DashboardComponent } from './main/dashboard/dashboard.component';
 import { AssetComponent } from './main/asset/asset.component';
 import { AssetRegistryComponent } from './main/asset/asset-registry.component';
+
+//底層功能
 import { AuthGuard } from "app/services/service/AuthGuard";
+import { AuthService } from "app/services/service/AuthService";
+import { ServiceBroker } from "app/services/servicebroker/ServiceBroker";
+import { RestTemplate } from "app/services/util/RestTemplate";
+
+//Shared component
+import { CiSearchComponent } from './shared/ci-search/ci-search.component';
+import { GlyphiconComponent } from './shared/glyphicon/glyphicon.component';
+import { DynamicHtmlComponent } from './shared/dynamic-html/dynamic-html.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +39,9 @@ import { AuthGuard } from "app/services/service/AuthGuard";
     GlyphiconComponent,
     DashboardComponent,
     AssetComponent,
-    AssetRegistryComponent
+    AssetRegistryComponent,
+    CiSearchComponent,
+    DynamicHtmlComponent
   ],
   imports: [
     BrowserModule,

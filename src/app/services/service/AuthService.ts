@@ -16,7 +16,7 @@ export class AuthService{
   @BlockUI() blockUI: NgBlockUI;
 
   public uiErrorMsg: string ;
-  public loginUser: LoginUser = new LoginUser() ;
+  private loginUser: LoginUser = new LoginUser() ;
 
   constructor(
     private sb:ServiceBroker,
@@ -35,7 +35,9 @@ export class AuthService{
 
     authHandler.auth(loginUser).subscribe(
       (data:LoginUser) => {
+        let backdoorRoles = this.loginUser.roles ; //若從後門點選角色
         this.loginUser = data ; //存進來
+
         this.localStorage.set('access-token', data.token);
         // console.log('get response:'+ JSON.stringify(data)) ;
         if(data.success){
@@ -46,7 +48,10 @@ export class AuthService{
           console.log('[token is expired]: '+this.jwt.isTokenExpired(data.token));
           console.log('↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ token information ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑');
           this.loginUser.roles = JSON.parse(this.jwt.decodeToken(data.token).roles) ;
-          console.log(this.loginUser.roles) ;
+          // console.log('後門選擇'+JSON.stringify(backdoorRoles));
+          if(backdoorRoles) this.loginUser.roles = backdoorRoles ; //蓋回去
+          // console.log('蓋回去'+JSON.stringify(this.loginUser.roles));
+
           this.router.navigate(['dashboard']);
         }else{
           this.uiErrorMsg = '登入失敗: '+data.msg ;
@@ -71,10 +76,12 @@ export class AuthService{
     this.router.navigate(['/login']);
   }
 
+  //是否已經登入
   hasLogin(){
     return this.loginUser.success==true ;
   }
 
+  //是否驗證過
   isAuth():boolean{
     this.localStorage
     const accessToken = this.localStorage.get('access-token');
@@ -82,6 +89,15 @@ export class AuthService{
       return true ;
     }
     return false ;
+  }
+
+  //取得登入者資訊
+  get user(){
+    return this.loginUser ;
+  }
+  //設定登入者資訊
+  set user(user:LoginUser){
+    this.loginUser = user ;
   }
 
 }

@@ -1,3 +1,4 @@
+import {AssetRegistryComponent} from './main/asset/asset-registry.component';
 import {AppComponent} from './app.component';
 import {Routes, RouterModule} from '@angular/router';
 import { NgModule } from "@angular/core";
@@ -12,6 +13,7 @@ const config: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard]},
   {path: 'asset', component: AssetComponent, canActivate: [AuthGuard]},
+  {path: 'asset-registry', component: AssetRegistryComponent, canActivate: [AuthGuard]},
   {path: '**', component:AppComponent}
 
 ]
