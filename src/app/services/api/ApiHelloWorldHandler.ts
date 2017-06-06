@@ -12,7 +12,4 @@ export class ApiHelloWorldHandler{
   @RequestMapping({path:"/hello/",method:HttpMethod.POST})
   helloPost(data:string):Observable<any>{return null}
 
-  @RequestMapping({path:"",method:HttpMethod.GET})
-  test():Observable<any>{return null}
-
 }

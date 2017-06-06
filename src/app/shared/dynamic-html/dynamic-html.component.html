@@ -1,9 +1,9 @@
-<ng-template [ngIf]="dynamicType == 'InputText'">
-  <div class="input-group">
+
+  <div class="input-group" *ngIf="dynamicType == 'InputText'">
     <span class="input-group-addon"><i [class]="icon_clazz"></i>{{label}}</span>
     <input class="form-control" [id]="id" [name]="name" [placeholder]="placeholder" type="text" [value]="value" (blur)="blur($event)"  [required]="required" [disabled]="disabled" />
   </div>
-</ng-template>
+
 
 <!--
   基本使用方式:
@@ -20,21 +20,21 @@
   }
 -->
 
-<ng-template [ngIf]="dynamicType == 'InputPasswordText'">
-  <div class="input-group">
+
+  <div class="input-group" *ngIf="dynamicType == 'InputPasswordText'">
     <span class="input-group-addon"><i [class]="icon_clazz"></i>{{label}}</span>
     <input class="form-control" [id]="id" [name]="name" [placeholder]="placeholder" type="password" [value]="value" (blur)="blur($event)"  [required]="required" [disabled]="disabled" />
   </div>
-</ng-template>
 
-<ng-template [ngIf]="dynamicType == 'SelectOneMenu'">
-  <div class="input-group">
+
+
+  <div class="input-group" *ngIf="dynamicType == 'SelectOneMenu'">
     <span class="input-group-addon"><i [class]="icon_clazz"></i>{{label}}</span>
     <select class="form-control" [name]="name" [id]="id" [(ngModel)]="selected" (change)="changeSelectOne($event)" [disabled]="disabled" [required]="required">
       <option *ngFor="let option of options" [ngValue]="option">{{option.name}}</option>
     </select>
   </div>
-</ng-template>
+
 
 <!--
   基本使用方式
@@ -49,14 +49,14 @@
   這裡的event.target會是<select>本身，非option，可透過e.target.selectedIndex自行到options取得
 -->
 
-<ng-template [ngIf]="dynamicType == 'SelectManyMenu'">
-  <div class="input-group">
+
+  <div class="input-group" *ngIf="dynamicType == 'SelectManyMenu'">
     <span class="input-group-addon"><i [class]="icon_clazz"></i>{{label}}</span>
     <select class="form-control" [name]="name" [id]="id" [(ngModel)]="selects"  (click)="changeSelectMany($event)" multiple [disabled]="disabled" [required]="required">
       <option *ngFor="let option of options" [ngValue]="option">{{option.name}}</option>
     </select>
   </div>
-</ng-template>
+
 
 <!--
   基本使用方式:

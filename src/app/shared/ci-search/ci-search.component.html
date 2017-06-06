@@ -4,9 +4,18 @@
   </div>
   <div class="panel-body">
 
-    <form #f="ngForm" (submit)="test(f)">
+    <form #queryForm="ngForm" (submit)="doSubmit(queryForm)">
 
-        <div class="form-group" *ngFor="let spec of specs">
+          <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon"><i [class]="icon_clazz"></i>查詢類別</span>
+                <select class="form-control" name="ciselect" id="ciselect" [(ngModel)]="selected" (change)="specService.selectCIOption($event)" >
+                  <option *ngFor="let ciopt of specService.cioptions" [ngValue]="ciopt">{{ciopt.name}}</option>
+                </select>
+              </div>
+          </div>
+
+        <div class="form-group" *ngFor="let spec of specService.specs">
           <!--{{spec|json}}-->
           <dynamic-html [label]="spec.label"
                         [dynamicType]="spec.dynamicType"
@@ -14,11 +23,15 @@
                         [options]="spec.options"
                         [required]="spec.required"
                         [disabled]="spec.disabled"
-                        [p]="spec.p" ngModel ></dynamic-html>
+                        [p]="spec.p" ngModel >
+           </dynamic-html>
         </div>
         <div align="center">
-            <button class="btn btn-success" type="submit" [disabled]="!f.valid">查詢</button>
+          <div *ngIf="(specService.uiErrorMsg)" >
+            <div class="alert alert-danger" role="alert">{{specService.uiErrorMsg}}</div>
           </div>
+          <button class="btn btn-success" type="submit" [disabled]="!queryForm.valid">開始查詢</button>
+        </div>
     </form>
 
   </div>

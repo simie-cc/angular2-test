@@ -7,8 +7,5 @@ export class LoginUser{
   public success?:boolean;
   public msg?:string;
   public roles?:CodeName[];
-    constructor(){
-
-    }
 
 }

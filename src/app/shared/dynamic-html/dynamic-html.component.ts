@@ -56,13 +56,21 @@ export class DynamicHtmlComponent implements OnInit,ControlValueAccessor  {
   private icon_clazz:string ;
 
 
-  constructor() { }
-
-  ngOnInit() {
-    this.icon_clazz = 'glyphicon glyphicon-'+this.p ;
+  constructor() {
+    console.log('元件重建');
   }
 
+  ngOnInit() {
+    console.log('元件初始化');
+    this.icon_clazz = 'glyphicon glyphicon-'+this.p ;
+    this.reset()
+  }
 
+  private reset(){
+    this._value = '' ;
+    this._selected=null ;
+    this._selects=[] ;
+  }
 
   private onTouchedCallback: () => void = noop;
   private onChangeCallback: (_: any) => void = noop;
@@ -90,7 +98,6 @@ export class DynamicHtmlComponent implements OnInit,ControlValueAccessor  {
   }
 
   set value(v: any) {
-    console.log("set:"+v);
     if (v !== this._value) {
       this._value = v ;
       this.onChangeCallback(v);
@@ -122,7 +129,6 @@ export class DynamicHtmlComponent implements OnInit,ControlValueAccessor  {
   //當元件裡面的元件有動作時，也要通知外部一起更新
   blur(event){
     this._value = event.target.value ;
-    console.log("change:"+this._value);
     this.onChangeCallback(event.target.value);
   }
 

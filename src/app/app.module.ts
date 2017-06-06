@@ -8,6 +8,7 @@ import { HttpModule } from '@angular/http';
 import { LocalStorageModule, LocalStorageService } from 'angular-2-local-storage';
 import { BlockUIModule } from 'ng-block-ui';
 import { JwtHelper } from "angular2-jwt";
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 //以下是業務功能相關
 import { AppRoutingModule } from "app/app.routing.module";
@@ -31,6 +32,11 @@ import { GlyphiconComponent } from './shared/glyphicon/glyphicon.component';
 import { DynamicHtmlComponent } from './shared/dynamic-html/dynamic-html.component';
 import { CiTableComponent } from './shared/ci-table/ci-table.component';
 import { LdapMenuComponent } from './shared/ldap-menu/ldap-menu.component';
+import { SpecService } from "app/services/service/SpecService";
+import { QueryAssetService } from "app/services/service/QueryAssetService";
+import { AssetinComponent } from './main/idc/assetin/assetin.component';
+import { AssetoutComponent } from './main/idc/assetout/assetout.component';
+import { AssetexchangeComponent } from './main/idc/assetexchange/assetexchange.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +51,10 @@ import { LdapMenuComponent } from './shared/ldap-menu/ldap-menu.component';
     CiSearchComponent,
     DynamicHtmlComponent,
     CiTableComponent,
-    LdapMenuComponent
+    LdapMenuComponent,
+    AssetinComponent,
+    AssetoutComponent,
+    AssetexchangeComponent
   ],
   imports: [
     BrowserModule,
@@ -56,13 +65,16 @@ import { LdapMenuComponent } from './shared/ldap-menu/ldap-menu.component';
       prefix: 'ictinv-app',
       storageType: 'localStorage'
     }),
-    BlockUIModule
+    BlockUIModule,
+    NgxDatatableModule
   ],
   providers: [
     ServiceBroker,
     RestTemplate,
     AuthService,
     AuthGuard,
+    SpecService,
+    QueryAssetService,
     LocalStorageService,
     JwtHelper
   ],
