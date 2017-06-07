@@ -9,6 +9,8 @@ import { LocalStorageModule, LocalStorageService } from 'angular-2-local-storage
 import { BlockUIModule } from 'ng-block-ui';
 import { JwtHelper } from "angular2-jwt";
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { MyDatePickerModule } from 'mydatepicker';
+
 
 //以下是業務功能相關
 import { AppRoutingModule } from "app/app.routing.module";
@@ -66,7 +68,8 @@ import { AssetexchangeComponent } from './main/idc/assetexchange/assetexchange.c
       storageType: 'localStorage'
     }),
     BlockUIModule,
-    NgxDatatableModule
+    NgxDatatableModule,
+    MyDatePickerModule
   ],
   providers: [
     ServiceBroker,

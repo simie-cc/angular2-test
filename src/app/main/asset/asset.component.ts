@@ -18,20 +18,21 @@ export class AssetComponent implements OnInit {
   constructor(private queryAssetService:QueryAssetService,private specService:SpecService,private router: ActivatedRoute,) { }
 
   ngOnInit() {
-    //step0.鎖定畫面
-    //step1.清除此頁面資料
-    this.specService.initialPage();
-    //step2.做page參數初始化
-    this.initialRouterParam();
+    //第一次進入頁面
+    console.log('Step0. 第一次進入頁面初始化元件');
+    this.initialRouterParam(); //這裡只有第一次進頁面才會執行，後續若是同一個Component換頁則不會執行到
   }
 
   initialRouterParam(){
     this.blockUI.start("頁面初始化中...");
-    this.router.params.delay(1000).subscribe(
+    this.router.params.delay(1000).subscribe(  //後續若是同一個Component換頁，則router.param會持續收到通知
       (routerParam)=>{
         this.specService.page = routerParam['page'] ;
+        console.log('Step1. 接收到選單參數:'+routerParam['page']);
         this.blockUI.stop();
-        //step3.依page初始化查詢選單(不知道有沒比較好的寫法...有點鳥)
+        console.log('Step2. 重置頁面元件參數');
+        this.specService.initialPage();
+        console.log('Step3. 依頁面參數重新初始化頁面元件');
         this.specService.initialQueryCIOptions();
       },
       (error)=>{

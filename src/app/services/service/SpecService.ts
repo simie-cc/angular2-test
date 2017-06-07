@@ -21,9 +21,10 @@ export class SpecService{
   @BlockUI() blockUI: NgBlockUI;
   private cioptions:CodeName[] ; //CI下拉選單
   private specs:QuerySpec[] = [] //動態查詢條件規格
-  public uiErrorMsg:string; //錯誤訊息
 
+  public uiErrorMsg:string; //錯誤訊息
   public page:string ; //現在在哪一個功能頁(終端[asset]或機房[idcasset]?)
+  public selected:CodeName ; //現在選到哪一個CI
 
   constructor(
     private sb:ServiceBroker,
@@ -31,7 +32,6 @@ export class SpecService{
   ){}
 
   initialPage(){
-    console.log('重置參數');
     this.cioptions=[] ;
     this.specs = [] ;
     this.uiErrorMsg='';
@@ -47,11 +47,12 @@ export class SpecService{
     //              {code:"Network",name:"網路"}
     //  ]
      this.blockUI.start('表單初始化中...');
-
+     console.log('表單初始化');
      let api = this.sb.getApiHandler(ApiSpecHandler);
       api.getSelectOptions(this.page).delay(1000).subscribe(
         (opts)=>{
           this.cioptions = opts ;
+          console.log('表單初始化完成');
           this.blockUI.stop()
         },
         (error)=>{
@@ -64,8 +65,9 @@ export class SpecService{
   }
 
   selectCIOption(event){
-    let selected = this.cioptions[event.target.selectedIndex] ;
-    this.initialQueryBlock(selected) ;
+    console.log('現在選的是'+JSON.stringify(this.selected));
+    // this.selected = this.cioptions[event.target.selectedIndex] ;
+    this.initialQueryBlock(this.selected) ;
   }
 
   initialQueryBlock(selectedOption:CodeName){
@@ -78,7 +80,7 @@ export class SpecService{
 
       this.blockUI.start('初始化中');
       let api = this.sb.getApiHandler(ApiSpecHandler);
-      api.getUIQuerySpec(selectedOption).subscribe(
+      api.getUIQuerySpec(selectedOption.code).subscribe(
         (d)=>{
           console.log(d) ;
           this.specs = d ;

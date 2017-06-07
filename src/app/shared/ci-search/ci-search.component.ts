@@ -19,6 +19,7 @@ export class CiSearchComponent implements OnInit {
 
   @Output() private formSubmit = new EventEmitter<QuerySpec>() ;
 
+
   doSubmit(queryForm){
     let a = queryForm.value  ;
     console.log('formdata:'+JSON.stringify(a));

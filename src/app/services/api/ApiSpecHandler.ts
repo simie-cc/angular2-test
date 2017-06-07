@@ -13,6 +13,6 @@ export class ApiSpecHandler{
 
   //依據選擇的CI種類查詢對應的規格
   @RequestMapping({path:"/uiqueryspec/{0}",method:HttpMethod.GET})
-  getUIQuerySpec(selectedCI:CodeName):Observable<any>{return null;}
+  getUIQuerySpec(selectedCI:string):Observable<any>{return null;}
 
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter,forwardRef  } from '@angular/core';
 import { CodeName } from "app/vo/CodeName";
 import { ControlValueAccessor,NG_VALUE_ACCESSOR } from "@angular/forms";
+import { IMyDpOptions } from "mydatepicker";
 
 /**
  *  reference: http://blog.csdn.net/u010730126/article/details/70799099,
@@ -25,123 +26,67 @@ export const EXE_COUNTER_VALUE_ACCESSOR: any = {
 })
 export class DynamicHtmlComponent implements OnInit,ControlValueAccessor  {
 
-  //元件類型
-  @Input() private dynamicType:string ;
-  //元件id
-  @Input() private id?:string;
-  //元件名稱(必填，須給ngModel綁定)
-  @Input() private name:string;
-  //元件必填屬性
-  @Input() private required?:boolean=false;
-  @Input() private disabled: boolean = false;
-  @Input() private defaultValue ;
+  //提供給外部使用的必要屬性
+  @Input() private dynamicType:string ; //元件類型
+  @Input() private name:string; //元件名稱
+  @Input() private required?:boolean=false; //元件必填屬性
+  @Input() private disabled: boolean = false; //元件disabled屬性
+  //提供給外部使用的其它非必要屬性
+  @Input() private id?:string; //元件id
+  @Input() private options?:CodeName[]=[] ; //下拉選單項目
+  @Input() private p?:string=''; //icon style
+  @Input() private placeholder?:string=''; //placeholder
+  @Input() private label?:string='' ; //說明欄位
+  @Input() private dateOptions:IMyDpOptions; //日期選單設定
 
-  //輸入框值
-  @Input() private _value?:string ='';
-  //單選下拉值
-  @Input() private _selected?:CodeName ;
-  //多選下拉值
-  @Input() private _selects?:CodeName[]=[] ;
-
-
-  //下拉選單項目
-  @Input() private options?:CodeName[]=[] ;
-  //icon style
-  @Input() private p?:string='';
-  //placeholder
-  @Input() private placeholder?:string='';
-  //說明欄位
-  @Input() private label?:string='' ;
-
-  private icon_clazz:string ;
+  //以下是外部使用可監聽事件
+  @Output() private dateChanged = new EventEmitter() ;
+  @Output() private inputBlur = new EventEmitter() ;
+  @Output() private changeSelectOne = new EventEmitter() ;
+  @Output() private changeSelectMany = new EventEmitter() ;
 
 
-  constructor() {
-    console.log('元件重建');
-  }
+  private icon_clazz:string ; //內部使用icon style
+  private _value?:string =''; //內部使用輸入框值
+  private _selected?:CodeName ; //內部使用單選下拉值
+  private _selects?:CodeName[]=[] ; //內部使用多選下拉值
+  private _dateModel?:Object ; //內部使用日期值
+
+  constructor() {}
 
   ngOnInit() {
-    console.log('元件初始化');
     this.icon_clazz = 'glyphicon glyphicon-'+this.p ;
-    this.reset()
   }
 
-  private reset(){
-    this._value = '' ;
-    this._selected=null ;
-    this._selects=[] ;
-  }
 
+  //以下實作ControlValueAccessor
   private onTouchedCallback: () => void = noop;
   private onChangeCallback: (_: any) => void = noop;
-
-
   writeValue(obj: any): void {
     if(this.dynamicType==='InputText') this._value = obj ;
     else if(this.dynamicType==='InputPasswordText') this._value = obj ;
     else if(this.dynamicType==='SelectOneMenu') this._selected = obj ;
     else if(this.dynamicType==='SelectManyMenu') this._selects = obj ;
-
+    else if(this.dynamicType==='DatePicker') this._dateModel = obj ;
   }
-  registerOnChange(fn: any): void {
-    this.onChangeCallback = fn ;
-  }
-  registerOnTouched(fn: any): void {
-    this.onTouchedCallback = fn ;
-  }
-  setDisabledState(isDisabled: boolean): void {
-    this.disabled = isDisabled;
-  }
+  registerOnChange(fn: any): void { this.onChangeCallback = fn ; }
+  registerOnTouched(fn: any): void { this.onTouchedCallback = fn ; }
+  setDisabledState(isDisabled: boolean): void { this.disabled = isDisabled; }
 
-  get value(): any {
-    return this._value ;
-  }
+  //提供給外部存取值欄位
+  get value(): any { return this._value ; }
+  set value(v: any) { if (v !== this._value) { this._value = v ; this.onChangeCallback(v); } }
+  get selected():any{ return this._selected ; }
+  set selected(v:any){ if (v != this._selected) { this._selected = v ; this.onChangeCallback(v); } }
+  get selects():any{return this._selects ;}
+  set selects(v:any){if (v != this._selects) { this._selects = v ; this.onChangeCallback(v); } }
+  get dateModel():any{ return this._dateModel ; }
+  set dateModel(v:any){ if (v != this._dateModel) { this._dateModel = v ; this.onChangeCallback(v); } }
 
-  set value(v: any) {
-    if (v !== this._value) {
-      this._value = v ;
-      this.onChangeCallback(v);
-    }
-  }
-
-  get selected():any{
-    return this._selected ;
-  }
-
-  set selected(v:any){
-    if (v != this._selected) {
-      this._selected = v ;
-      this.onChangeCallback(v);
-    }
-  }
-
-  get selects():any{
-    return this._selects ;
-  }
-
-  set selects(v:any){
-    if (v != this._selects) {
-      this._selects = v ;
-      this.onChangeCallback(v);
-    }
-  }
-
-  //當元件裡面的元件有動作時，也要通知外部一起更新
-  blur(event){
-    this._value = event.target.value ;
-    this.onChangeCallback(event.target.value);
-  }
-
-  changeSelectOne(event){
-    //改變了，也要把值向外通知
-    this.onChangeCallback(this._selected) ;
-
-  }
-
-  changeSelectMany(event){
-    this.onChangeCallback(this._selects) ;
-  }
-
-
+  //當元件裡面的元件有動作時，也要把事件往外發送
+  onInputBlur(event){ this.onChangeCallback(event.target.value); this.inputBlur.emit(event); } //發送原生事件
+  onChangeSelectOne(event){ this.onChangeCallback(this._selected) ; this.changeSelectOne.emit(event) } //發送原生事件
+  onChangeSelectMany(event){ this.onChangeCallback(this._selects) ; this.changeSelectMany.emit(event) } //發送原生事件
+  onDateChanged(event){ this.onChangeCallback(this._dateModel) ; this.dateChanged.emit(event); } //發送mydate物件
 
 }

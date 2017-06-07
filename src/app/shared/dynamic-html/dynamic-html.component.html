@@ -1,7 +1,7 @@
 
   <div class="input-group" *ngIf="dynamicType == 'InputText'">
     <span class="input-group-addon"><i [class]="icon_clazz"></i>{{label}}</span>
-    <input class="form-control" [id]="id" [name]="name" [placeholder]="placeholder" type="text" [value]="value" (blur)="blur($event)"  [required]="required" [disabled]="disabled" />
+    <input class="form-control" [id]="id" [name]="name" [placeholder]="placeholder" type="text" [value]="value" (blur)="onInputBlur($event)"  [required]="required" [disabled]="disabled" />
   </div>
 
 
@@ -23,14 +23,14 @@
 
   <div class="input-group" *ngIf="dynamicType == 'InputPasswordText'">
     <span class="input-group-addon"><i [class]="icon_clazz"></i>{{label}}</span>
-    <input class="form-control" [id]="id" [name]="name" [placeholder]="placeholder" type="password" [value]="value" (blur)="blur($event)"  [required]="required" [disabled]="disabled" />
+    <input class="form-control" [id]="id" [name]="name" [placeholder]="placeholder" type="password" [value]="value" (blur)="onInputBlur($event)"  [required]="required" [disabled]="disabled" />
   </div>
 
 
 
   <div class="input-group" *ngIf="dynamicType == 'SelectOneMenu'">
     <span class="input-group-addon"><i [class]="icon_clazz"></i>{{label}}</span>
-    <select class="form-control" [name]="name" [id]="id" [(ngModel)]="selected" (change)="changeSelectOne($event)" [disabled]="disabled" [required]="required">
+    <select class="form-control" [name]="name" [id]="id" [(ngModel)]="selected" (change)="onChangeSelectOne($event)" [disabled]="disabled" [required]="required">
       <option *ngFor="let option of options" [ngValue]="option">{{option.name}}</option>
     </select>
   </div>
@@ -52,7 +52,7 @@
 
   <div class="input-group" *ngIf="dynamicType == 'SelectManyMenu'">
     <span class="input-group-addon"><i [class]="icon_clazz"></i>{{label}}</span>
-    <select class="form-control" [name]="name" [id]="id" [(ngModel)]="selects"  (click)="changeSelectMany($event)" multiple [disabled]="disabled" [required]="required">
+    <select class="form-control" [name]="name" [id]="id" [(ngModel)]="selects"  (click)="onChangeSelectMany($event)" multiple [disabled]="disabled" [required]="required">
       <option *ngFor="let option of options" [ngValue]="option">{{option.name}}</option>
     </select>
   </div>
@@ -63,3 +63,8 @@
   <dynamic-html label="測試一下" dynamicType="SelectManyMenu" [options]="options" name="test3" ngModel required></dynamic-html>
   其它同SelectOneMenu方法
 -->
+
+  <div class="input-group" *ngIf="dynamicType == 'DatePicker'">
+    <span class="input-group-addon"><i [class]="icon_clazz"></i>{{label}}</span>
+    <my-date-picker name="mydate" [(ngModel)]="dateModel" [options]="dateOptions" (dateChanged)="onDateChanged($event)" ></my-date-picker>
+  </div>
