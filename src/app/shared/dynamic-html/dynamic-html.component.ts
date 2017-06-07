@@ -40,10 +40,10 @@ export class DynamicHtmlComponent implements OnInit,ControlValueAccessor  {
   @Input() private dateOptions:IMyDpOptions; //日期選單設定
 
   //以下是外部使用可監聽事件
-  @Output() private dateChanged = new EventEmitter() ;
-  @Output() private inputBlur = new EventEmitter() ;
-  @Output() private changeSelectOne = new EventEmitter() ;
-  @Output() private changeSelectMany = new EventEmitter() ;
+  @Output() private dateChanged = new EventEmitter() ; //當datepicker日期有變化時
+  @Output() private inputBlur = new EventEmitter() ; //當InputText輸入onBlur時
+  @Output() private changeSelectOne = new EventEmitter() ; //當SelectOneMenu改變選項時
+  @Output() private changeSelectMany = new EventEmitter() ; //當SelectManyMenu改變選項時
 
 
   private icon_clazz:string ; //內部使用icon style
