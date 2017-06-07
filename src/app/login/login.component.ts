@@ -8,6 +8,7 @@ import {Observable} from 'rxjs';
 import { AuthService } from "app/services/service/AuthService";
 import { CodeName } from "app/vo/CodeName";
 import { ApiUserHandler } from "app/services/api/ApiUserHandler";
+import { LDAP } from "app/vo/LDAP";
 
 @Component({
   selector: 'login',
@@ -59,5 +60,15 @@ export class LoginComponent implements OnInit {
     }
 
   }
+
+  //===========test
+
+  private testModel:LDAP = { com:{code:"3",name:"C"}, org:{code:"6",name:"F"}, unit:{code:"9",name:"I"} };
+  testSelectEvent(event){
+    console.log(this.testModel);
+  }
+
+
+
 
 }

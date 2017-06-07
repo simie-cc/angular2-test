@@ -68,3 +68,9 @@
     <span class="input-group-addon"><i [class]="icon_clazz"></i>{{label}}</span>
     <my-date-picker name="mydate" [(ngModel)]="dateModel" [options]="dateOptions" (dateChanged)="onDateChanged($event)" ></my-date-picker>
   </div>
+
+
+  <div class="input-group" *ngIf="dynamicType == 'SelectLDAP'">
+    <span class="input-group-addon"><i [class]="icon_clazz"></i>{{label}}</span>
+
+  </div>

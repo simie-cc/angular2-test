@@ -28,11 +28,16 @@
           <hr>
           <div align="center">
             <button class="btn btn-success" type="submit" [disabled]="!loginForm.valid">登入</button>
+            <button class="btn btn-success" type="button" (click)="testSelectEvent($event)">測式</button>
+            <ldap-menu [name]="'name111'" [(ngModel)]="testModel" ></ldap-menu>
           </div>
 
         </div>
       </form>
     </div>
   </div>
+
+
+
 
 </div>
