@@ -4,14 +4,14 @@
   </div>
   <div class="panel-body">
 
-      <div class="form-group">
-              <div class="input-group">
-                <span class="input-group-addon"><i [class]="icon_clazz"></i>查詢類別</span>
-                <select class="form-control" name="ciselect" id="ciselect" [(ngModel)]="specService.selected" (change)="specService.selectCIOption($event)" >
-                  <option *ngFor="let ciopt of specService.cioptions" [ngValue]="ciopt">{{ciopt.name}}</option>
-                </select>
-              </div>
-          </div>
+    <div class="form-group">
+      <div class="input-group">
+        <span class="input-group-addon"><i [class]="icon_clazz"></i>查詢類別</span>
+          <select class="form-control" name="ciselect" id="ciselect" [(ngModel)]="specService.selected" (change)="specService.selectCIOption($event)" >
+            <option *ngFor="let ciopt of specService.cioptions" [ngValue]="ciopt">{{ciopt.name}}</option>
+          </select>
+      </div>
+    </div>
 
 
     <form #queryForm="ngForm" (submit)="doSubmit(queryForm)">

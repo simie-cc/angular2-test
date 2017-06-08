@@ -26,8 +26,8 @@ export class CiSearchComponent implements OnInit {
   doSubmit(queryForm){
     let a = queryForm.value  ;
     console.log('formdata:'+JSON.stringify(a));
-
     queryForm.reset() ;
+    console.log('formdata:'+JSON.stringify(queryForm.value));
 
   }
   constructor(private specService:SpecService) { }

@@ -11,7 +11,7 @@ import { LDAP } from "app/vo/LDAP";
     動態顯示不同種類的元件
  */
 
-const noop = () => { };
+const noop = () => {};
 
 export const EXE_COUNTER_VALUE_ACCESSOR: any = {
     provide: NG_VALUE_ACCESSOR,
@@ -33,7 +33,6 @@ export class DynamicHtmlComponent implements OnInit,ControlValueAccessor  {
   @Input() private required?:boolean=false; //元件必填屬性
   @Input() private disabled: boolean = false; //元件disabled屬性
   //提供給外部使用的其它非必要屬性
-  @Input() private id?:string; //元件id
   @Input() private options?:CodeName[]=[] ; //下拉選單項目
   @Input() private p?:string=''; //icon style
   @Input() private placeholder?:string=''; //placeholder
@@ -72,8 +71,7 @@ export class DynamicHtmlComponent implements OnInit,ControlValueAccessor  {
   private onTouchedCallback: () => void = noop;
   private onChangeCallback: (_: any) => void = noop;
   writeValue(obj: any): void {
-    if(obj==null||obj==='') return ;
-    console.log('writeValue:'+obj+'============');
+    if(obj==null) return ; //obj='' 不能return 會造成form.reset()無法清除
     if(this.dynamicType==='InputText') this._value = obj ;
     else if(this.dynamicType==='InputPasswordText') this._value = obj ;
     else if(this.dynamicType==='SelectOneMenu') this._selected = obj ;
@@ -100,13 +98,17 @@ export class DynamicHtmlComponent implements OnInit,ControlValueAccessor  {
 
   //當元件裡面的元件有動作時，也要把事件往外發送
   onInputBlur(event){ this.onChangeCallback(event.target.value); this.inputBlur.emit(event); } //發送原生事件
-  onChangeSelectOne(event){ this.onChangeCallback(this._selected) ; this.changeSelectOne.emit(event) } //發送原生事件
+  onChangeSelectOne(event){
+
+    this.onChangeCallback(this._selected) ;
+    this.changeSelectOne.emit(event)
+  } //發送原生事件
   onChangeSelectMany(event){ this.onChangeCallback(this._selects) ; this.changeSelectMany.emit(event) } //發送原生事件
   onDateChanged(event){ this.onChangeCallback(this._dateModel) ; this.dateChanged.emit(event); } //發送mydate物件
   onChangeSelectCom(event){
     this.onChangeCallback(this._ldapModel) ;
     this.changeSelectCom.emit(event);
-  } //
+  }
   onChangeSelectOrg(event){
     this.onChangeCallback(this._ldapModel) ;
     this.changeSelectOrg.emit(event);
