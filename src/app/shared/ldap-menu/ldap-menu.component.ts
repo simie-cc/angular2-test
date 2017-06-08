@@ -39,8 +39,6 @@ export class LdapMenuComponent implements OnInit, ControlValueAccessor {
   constructor() { }
 
   ngOnInit() {
-    console.log('Ldap-Menu Component ngOnInit') ;
-
   }
 
 
@@ -49,7 +47,6 @@ export class LdapMenuComponent implements OnInit, ControlValueAccessor {
   private onChangeCallback: (_: any) => void = noop;
   writeValue(obj:LDAP): void {
     if(obj==null) return ;
-    console.log('write ldap:'+obj) ;
     this._ldap = obj ;
   }
   registerOnChange(fn: any): void { this.onChangeCallback = fn ; }

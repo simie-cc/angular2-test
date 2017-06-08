@@ -25,10 +25,9 @@ export class CiSearchComponent implements OnInit {
 
   doSubmit(queryForm){
     let a = queryForm.value  ;
-    console.log('formdata:'+JSON.stringify(a));
+    console.log('送出去的資料:'+JSON.stringify(a));
+    console.log('目前選擇的CI種類:'+JSON.stringify(this.specService.selected)) ;
     queryForm.reset() ;
-    console.log('formdata:'+JSON.stringify(queryForm.value));
-
   }
   constructor(private specService:SpecService) { }
 
