@@ -1,11 +1,11 @@
 <div>
-    <select class="form-control" name="_comname" id="comid" [(ngModel)]="_selectCom"  (change)="onChangeSelectCom($event)" [disabled]="comdisabled" [required]="comrequired">
+    <select class="form-control" name="_comname" id="comid" [(ngModel)]="modelCom"  (change)="onChangeSelectCom($event)" [disabled]="comdisabled" [required]="comrequired">
       <option *ngFor="let option of optionsCom" [ngValue]="option">{{option.name}}</option>
     </select>
-    <select class="form-control" name="_orgname" id="orgid" [(ngModel)]="_selectOrg"  (change)="onChangeSelectOrg($event)" [disabled]="orgdisabled" [required]="orgrequired">
+    <select class="form-control" name="_orgname" id="orgid" [(ngModel)]="modelOrg"  (change)="onChangeSelectOrg($event)" [disabled]="orgdisabled" [required]="orgrequired">
       <option *ngFor="let option of optionsOrg" [ngValue]="option">{{option.name}}</option>
     </select>
-    <select class="form-control" name="_unitname" id="unitid" [(ngModel)]="_selectUnit"  (change)="onChangeSelectUnit($event)" [disabled]="unitdisabled" [required]="unitrequired">
+    <select class="form-control" name="_unitname" id="unitid" [(ngModel)]="modelUnit"  (change)="onChangeSelectUnit($event)" [disabled]="unitdisabled" [required]="unitrequired">
       <option *ngFor="let option of optionsUnit" [ngValue]="option">{{option.name}}</option>
     </select>
 </div>

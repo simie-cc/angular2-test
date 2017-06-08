@@ -22,14 +22,6 @@ export const EXE_COUNTER_VALUE_ACCESSOR: any = {
 })
 export class LdapMenuComponent implements OnInit, ControlValueAccessor {
 
-/**
- * <ldap-menu name="abc" id="abc" (selectOrg)="handleOrg($event)" ...
- * value="{com:1,org:2,unit:3}" ></ldap-menu>
- */
-
-  @Input() private name:string ;
-  @Input() private id?:string ;
-
   @Input() private comrequired?:boolean=false;
   @Input() private orgrequired?:boolean=false;
   @Input() private unitrequired?:boolean=false;
@@ -38,29 +30,17 @@ export class LdapMenuComponent implements OnInit, ControlValueAccessor {
   @Input() private orgdisabled?:boolean=false;
   @Input() private unitdisabled?:boolean=false;
 
-  private _selectCom:CodeName ;
-  private _selectOrg:CodeName ;
-  private _selectUnit:CodeName ;
+  private _ldap:LDAP ={ com:{code:"",name:""}, org:{code:"",name:""}, unit:{code:"",name:""} };
 
-  private optionsCom:CodeName[] ;
-  private optionsOrg:CodeName[] ;
-  private optionsUnit:CodeName[] ;
-
-  private _comname:string ;
-  private _orgname:string;
-  private _unitname:string;
+  @Input() private optionsCom:CodeName[] ;
+  @Input() private optionsOrg:CodeName[] ;
+  @Input() private optionsUnit:CodeName[] ;
 
   constructor() { }
 
   ngOnInit() {
     console.log('Ldap-Menu Component ngOnInit') ;
-    this.optionsCom = [{code:"1",name:"A"},{code:"2",name:"B"},{code:"3",name:"C"}] ;
-    this.optionsOrg = [{code:"4",name:"D"},{code:"5",name:"E"},{code:"6",name:"F"}] ;
-    this.optionsUnit = [{code:"7",name:"G"},{code:"8",name:"H"},{code:"9",name:"I"}] ;
-    console.log('write value:'+JSON.stringify(this.value))
-    this._comname = 'com_'+this.name;
-    this._orgname = 'org_'+this.name;
-    this._unitname = 'unit_'+this.name;
+
   }
 
 
@@ -68,14 +48,8 @@ export class LdapMenuComponent implements OnInit, ControlValueAccessor {
   private onTouchedCallback: () => void = noop;
   private onChangeCallback: (_: any) => void = noop;
   writeValue(obj:LDAP): void {
-    console.log(obj) ;
     if(obj==null) return ;
-    this._selectCom = obj.com ;
-    this._selectOrg = obj.org ;
-    this._selectUnit = obj.unit ;
-    console.log('write value:'+JSON.stringify(this._selectCom))
-    console.log('write value:'+JSON.stringify(this._selectOrg))
-    console.log('write value:'+JSON.stringify(this._selectUnit))
+    this._ldap = obj ;
   }
   registerOnChange(fn: any): void { this.onChangeCallback = fn ; }
   registerOnTouched(fn: any): void { this.onTouchedCallback = fn ; }
@@ -85,15 +59,32 @@ export class LdapMenuComponent implements OnInit, ControlValueAccessor {
     this.unitdisabled = isDisabled ;
   }
 
-  get value(){
-    console.log('get value:'+JSON.stringify({ com:this._selectCom, org:this._selectOrg, unit:this._selectUnit }) );
-    return { com:this._selectCom, org:this._selectOrg, unit:this._selectUnit } ;
+  get modelCom(){
+    return this._ldap.com ;
   }
-
-  set value(v:any){
-    console.log('set value:'+JSON.stringify(v));
-    if(this.value != v)this.value = v ;
-    this.onChangeCallback(this.value);
+  set modelCom(v:CodeName){
+    if(v.code !== this._ldap.com.code){
+          this._ldap.com = v ;
+      }
+      this.onChangeCallback(v);
+  }
+  get modelOrg(){
+    return this._ldap.org ;
+  }
+  set modelOrg(v:CodeName){
+    if(v.code !== this._ldap.org.code){
+          this._ldap.org = v ;
+      }
+      this.onChangeCallback(v);
+  }
+  get modelUnit(){
+    return this._ldap.unit ;
+  }
+  set modelUnit(v:CodeName){
+    if(v.code !== this._ldap.unit.code){
+          this._ldap.unit = v ;
+      }
+      this.onChangeCallback(v);
   }
 
   @Output() private changeSelectCom = new EventEmitter() ;
@@ -101,21 +92,21 @@ export class LdapMenuComponent implements OnInit, ControlValueAccessor {
   @Output() private changeSelectUnit = new EventEmitter() ;
 
   onChangeSelectCom(event){
-    console.log('onChangeSelectCom value:'+JSON.stringify(this.value));
-    this.onChangeCallback(this.value);
-    this.changeSelectCom.emit(this.value) ;
+    console.log('onChangeSelectCom value:'+JSON.stringify(this._ldap));
+    this.onChangeCallback(this._ldap);
+    this.changeSelectCom.emit(this._ldap) ;
   }
 
   onChangeSelectOrg(event){
-    console.log('onChangeSelectOrg value:'+JSON.stringify(this.value));
-    this.onChangeCallback(this.value);
-    this.changeSelectCom.emit(this.value) ;
+    console.log('onChangeSelectOrg value:'+JSON.stringify(this._ldap));
+    this.onChangeCallback(this._ldap);
+    this.changeSelectCom.emit(this._ldap) ;
   }
 
   onChangeSelectUnit(event){
-    console.log('onChangeSelectUnit value:'+JSON.stringify(this.value));
-    this.onChangeCallback(this.value);
-    this.changeSelectCom.emit(this.value) ;
+    console.log('onChangeSelectUnit value:'+JSON.stringify(this._ldap));
+    this.onChangeCallback(this._ldap);
+    this.changeSelectCom.emit(this._ldap) ;
   }
 
 }
