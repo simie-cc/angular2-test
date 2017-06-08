@@ -49,7 +49,7 @@ export class SpecService{
      this.blockUI.start('表單初始化中...');
      console.log('表單初始化');
      let api = this.sb.getApiHandler(ApiSpecHandler);
-      api.getSelectOptions(this.page).delay(1000).subscribe(
+      api.getSelectOptions(this.page).subscribe(
         (opts)=>{
           this.cioptions = opts ;
           console.log('表單初始化完成');
@@ -81,8 +81,8 @@ export class SpecService{
       this.blockUI.start('初始化中');
       let api = this.sb.getApiHandler(ApiSpecHandler);
       api.getUIQuerySpec(selectedOption.code).subscribe(
-        (d)=>{
-          console.log(d) ;
+        (d:QuerySpec[])=>{
+          console.log('QuerySpec:'+JSON.stringify(d)) ;
           this.specs = d ;
           this.blockUI.stop()
         },

@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter,forwardRef  } from '@ang
 import { CodeName } from "app/vo/CodeName";
 import { ControlValueAccessor,NG_VALUE_ACCESSOR } from "@angular/forms";
 import { IMyDpOptions } from "mydatepicker";
+import { LDAP } from "app/vo/LDAP";
 
 /**
  *  reference: http://blog.csdn.net/u010730126/article/details/70799099,
@@ -38,12 +39,18 @@ export class DynamicHtmlComponent implements OnInit,ControlValueAccessor  {
   @Input() private placeholder?:string=''; //placeholder
   @Input() private label?:string='' ; //說明欄位
   @Input() private dateOptions:IMyDpOptions; //日期選單設定
+  @Input() private optionsCom?:CodeName[]=[] ; //LDAP選單
+  @Input() private optionsOrg?:CodeName[]=[] ; //LDAP選單
+  @Input() private optionsUnit?:CodeName[]=[] ; //LDAP選單
 
   //以下是外部使用可監聽事件
   @Output() private dateChanged = new EventEmitter() ; //當datepicker日期有變化時
   @Output() private inputBlur = new EventEmitter() ; //當InputText輸入onBlur時
   @Output() private changeSelectOne = new EventEmitter() ; //當SelectOneMenu改變選項時
   @Output() private changeSelectMany = new EventEmitter() ; //當SelectManyMenu改變選項時
+  @Output() private changeSelectCom = new EventEmitter() ;
+  @Output() private changeSelectOrg = new EventEmitter() ;
+  @Output() private changeSelectUnit = new EventEmitter() ;
 
 
   private icon_clazz:string ; //內部使用icon style
@@ -51,11 +58,13 @@ export class DynamicHtmlComponent implements OnInit,ControlValueAccessor  {
   private _selected?:CodeName ; //內部使用單選下拉值
   private _selects?:CodeName[]=[] ; //內部使用多選下拉值
   private _dateModel?:Object ; //內部使用日期值
+  private _ldapModel?:LDAP ; //內部使用LDAP值
 
   constructor() {}
 
   ngOnInit() {
     this.icon_clazz = 'glyphicon glyphicon-'+this.p ;
+    if(!this.placeholder) this.placeholder='';
   }
 
 
@@ -63,11 +72,15 @@ export class DynamicHtmlComponent implements OnInit,ControlValueAccessor  {
   private onTouchedCallback: () => void = noop;
   private onChangeCallback: (_: any) => void = noop;
   writeValue(obj: any): void {
+    if(obj==null||obj==='') return ;
+    console.log('writeValue:'+obj+'============');
     if(this.dynamicType==='InputText') this._value = obj ;
     else if(this.dynamicType==='InputPasswordText') this._value = obj ;
     else if(this.dynamicType==='SelectOneMenu') this._selected = obj ;
     else if(this.dynamicType==='SelectManyMenu') this._selects = obj ;
     else if(this.dynamicType==='DatePicker') this._dateModel = obj ;
+    else if(this.dynamicType==='SelectLDAP') this._dateModel = obj ;
+
   }
   registerOnChange(fn: any): void { this.onChangeCallback = fn ; }
   registerOnTouched(fn: any): void { this.onTouchedCallback = fn ; }
@@ -82,11 +95,25 @@ export class DynamicHtmlComponent implements OnInit,ControlValueAccessor  {
   set selects(v:any){if (v != this._selects) { this._selects = v ; this.onChangeCallback(v); } }
   get dateModel():any{ return this._dateModel ; }
   set dateModel(v:any){ if (v != this._dateModel) { this._dateModel = v ; this.onChangeCallback(v); } }
+  get ldapModel():any{ return this._ldapModel ; }
+  set ldapModel(v:any){ if (v != this._ldapModel) { this._ldapModel = v ; this.onChangeCallback(v); } }
 
   //當元件裡面的元件有動作時，也要把事件往外發送
   onInputBlur(event){ this.onChangeCallback(event.target.value); this.inputBlur.emit(event); } //發送原生事件
   onChangeSelectOne(event){ this.onChangeCallback(this._selected) ; this.changeSelectOne.emit(event) } //發送原生事件
   onChangeSelectMany(event){ this.onChangeCallback(this._selects) ; this.changeSelectMany.emit(event) } //發送原生事件
   onDateChanged(event){ this.onChangeCallback(this._dateModel) ; this.dateChanged.emit(event); } //發送mydate物件
+  onChangeSelectCom(event){
+    this.onChangeCallback(this._ldapModel) ;
+    this.changeSelectCom.emit(event);
+  } //
+  onChangeSelectOrg(event){
+    this.onChangeCallback(this._ldapModel) ;
+    this.changeSelectOrg.emit(event);
+  }
+  onChangeSelectUnit(event){
+    this.onChangeCallback(this._ldapModel) ;
+    this.changeSelectUnit.emit(event);
+  }
 
 }

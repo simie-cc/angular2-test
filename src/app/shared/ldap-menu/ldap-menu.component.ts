@@ -49,6 +49,7 @@ export class LdapMenuComponent implements OnInit, ControlValueAccessor {
   private onChangeCallback: (_: any) => void = noop;
   writeValue(obj:LDAP): void {
     if(obj==null) return ;
+    console.log('write ldap:'+obj) ;
     this._ldap = obj ;
   }
   registerOnChange(fn: any): void { this.onChangeCallback = fn ; }
@@ -92,21 +93,21 @@ export class LdapMenuComponent implements OnInit, ControlValueAccessor {
   @Output() private changeSelectUnit = new EventEmitter() ;
 
   onChangeSelectCom(event){
-    console.log('onChangeSelectCom value:'+JSON.stringify(this._ldap));
+    // console.log('onChangeSelectCom value:'+JSON.stringify(this._ldap));
     this.onChangeCallback(this._ldap);
-    this.changeSelectCom.emit(this._ldap) ;
+    this.changeSelectCom.emit(event) ;
   }
 
   onChangeSelectOrg(event){
-    console.log('onChangeSelectOrg value:'+JSON.stringify(this._ldap));
+    // console.log('onChangeSelectOrg value:'+JSON.stringify(this._ldap));
     this.onChangeCallback(this._ldap);
-    this.changeSelectCom.emit(this._ldap) ;
+    this.changeSelectOrg.emit(event) ;
   }
 
   onChangeSelectUnit(event){
-    console.log('onChangeSelectUnit value:'+JSON.stringify(this._ldap));
+    // console.log('onChangeSelectUnit value:'+JSON.stringify(this._ldap));
     this.onChangeCallback(this._ldap);
-    this.changeSelectCom.emit(this._ldap) ;
+    this.changeSelectUnit.emit(event) ;
   }
 
 }

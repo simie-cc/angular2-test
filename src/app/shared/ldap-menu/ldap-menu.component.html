@@ -9,3 +9,5 @@
       <option *ngFor="let option of optionsUnit" [ngValue]="option">{{option.name}}</option>
     </select>
 </div>
+
+<!-- 注意: 若需要一開始就帶預設值，則預設值必須"參考"到options的實際項目，而非給相同值 -->

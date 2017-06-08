@@ -25,7 +25,7 @@ export class AssetComponent implements OnInit {
 
   initialRouterParam(){
     this.blockUI.start("頁面初始化中...");
-    this.router.params.delay(1000).subscribe(  //後續若是同一個Component換頁，則router.param會持續收到通知
+    this.router.params.subscribe(  //後續若是同一個Component換頁，則router.param會持續收到通知
       (routerParam)=>{
         this.specService.page = routerParam['page'] ;
         console.log('Step1. 接收到選單參數:'+routerParam['page']);
