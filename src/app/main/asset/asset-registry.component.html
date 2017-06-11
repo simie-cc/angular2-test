@@ -1,51 +1,7 @@
-<div class="panel panel-primary">
-  <div class="panel-heading">
-    <icon p="search"></icon>  新增區塊
-  </div>
-  <div class="panel-body">
+<div class="col-lg-10 col-lg-offset-1">
+<h2 class="sub-header">新增資產</h2>
+<ci-search searchIcon="search" searchTitle="查詢區塊"
+    searchSubtitle="新增資產種類" searchBtnName="確認新增"
+    (formSubmit)="createSubmit($event)" ></ci-search>
 
-    <div class="form-group">
-      <div class="input-group">
-        <span class="input-group-addon"><i [class]="icon_clazz"></i>新增類別</span>
-          <select class="form-control" name="ciselect" id="ciselect" [(ngModel)]="specService.selected" (change)="specService.selectCIOption($event)" >
-            <option *ngFor="let ciopt of specService.cioptions" [ngValue]="ciopt">{{ciopt.name}}</option>
-          </select>
-      </div>
-    </div>
-
-
-    <form #queryForm="ngForm" (submit)="doSubmit(queryForm)">
-
-        <div class="form-group" *ngFor="let spec of specService.specs">
-          <!--{{spec|json}}-->
-          <dynamic-html [label]="spec.label"
-                        [dynamicType]="spec.dynamicType"
-                        [name]="spec.name"
-                        [options]="spec.options"
-                        [dateOptions]="spec.dateOptions"
-                        [required]="spec.required"
-                        [disabled]="spec.disabled"
-                        [placeholder]="spec.placeholder"
-                        [optionsCom]="spec.optionsCom"
-                        [optionsOrg]="spec.optionsOrg"
-                        [optionsUnit]="spec.optionsUnit"
-                        [p]="spec.p"
-                         ngModel
-                          (changeSelectCom)="selectCom($event,spec)"
-                          (changeSelectOrg)="selectOrg($event,spec)">
-           </dynamic-html>
-        </div>
-
-        <div align="center">
-          <div *ngIf="(specService.uiErrorMsg)" >
-            <div class="alert alert-danger" role="alert">{{specService.uiErrorMsg}}</div>
-          </div>
-          <button class="btn btn-success" type="submit" [disabled]="!queryForm.valid">開始查詢</button>
-        </div>
-
-    </form>
-
-    {{queryForm.value|json}}
-
-  </div>
 </div>

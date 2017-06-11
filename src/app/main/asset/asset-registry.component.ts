@@ -12,4 +12,8 @@ export class AssetRegistryComponent implements OnInit {
   ngOnInit() {
   }
 
+  createSubmit(queryForm){
+
+  }
+
 }

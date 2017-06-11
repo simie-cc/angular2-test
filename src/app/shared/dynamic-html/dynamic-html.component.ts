@@ -72,7 +72,7 @@ export class DynamicHtmlComponent implements OnInit,ControlValueAccessor  {
   private onTouchedCallback: () => void = noop;
   private onChangeCallback: (_: any) => void = noop;
   writeValue(obj: any): void {
-    if(obj==null) return ; //obj='' 不能return 會造成form.reset()無法清除
+    // if(obj==null) return ; //不能return 會造成form.reset()無法清除
     if(this.dynamicType==='InputText') this._value = obj ;
     else if(this.dynamicType==='InputPasswordText') this._value = obj ;
     else if(this.dynamicType==='SelectOneMenu') this._selected = obj ;

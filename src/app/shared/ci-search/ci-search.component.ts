@@ -23,11 +23,15 @@ export class CiSearchComponent implements OnInit {
   @Input() searchTitle:string ;
   @Input() searchSubtitle:string ;
   @Input() searchIcon:string ;
+  @Input() searchBtnName:string ;
+
+  @Output() formSubmit = new EventEmitter() ;
 
   doSubmit(queryForm){
-    let a = queryForm.value  ;
-    console.log('送出去的資料:'+JSON.stringify(a));
-    console.log('目前選擇的CI種類:'+JSON.stringify(this.specService.selected)) ;
+    // let a = queryForm.value  ;
+    // console.log('送出去的資料:'+JSON.stringify(a));
+    // console.log('目前選擇的CI種類:'+JSON.stringify(this.specService.selected)) ;
+    this.formSubmit.emit(queryForm) ;
     queryForm.reset() ;
   }
   constructor(private specService:SpecService) { }
