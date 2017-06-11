@@ -44,6 +44,7 @@ export class DynamicHtmlComponent implements OnInit,ControlValueAccessor  {
 
   //以下是外部使用可監聽事件
   @Output() private dateChanged = new EventEmitter() ; //當datepicker日期有變化時
+  @Output() private inputFieldChanged = new EventEmitter() ;
   @Output() private inputBlur = new EventEmitter() ; //當InputText輸入onBlur時
   @Output() private changeSelectOne = new EventEmitter() ; //當SelectOneMenu改變選項時
   @Output() private changeSelectMany = new EventEmitter() ; //當SelectManyMenu改變選項時
@@ -99,12 +100,12 @@ export class DynamicHtmlComponent implements OnInit,ControlValueAccessor  {
   //當元件裡面的元件有動作時，也要把事件往外發送
   onInputBlur(event){ this.onChangeCallback(event.target.value); this.inputBlur.emit(event); } //發送原生事件
   onChangeSelectOne(event){
-
     this.onChangeCallback(this._selected) ;
     this.changeSelectOne.emit(event)
   } //發送原生事件
   onChangeSelectMany(event){ this.onChangeCallback(this._selects) ; this.changeSelectMany.emit(event) } //發送原生事件
   onDateChanged(event){ this.onChangeCallback(this._dateModel) ; this.dateChanged.emit(event); } //發送mydate物件
+  onInputFieldChanged(event){ this.onChangeCallback(this._dateModel) ; this.dateChanged.emit(event); }
   onChangeSelectCom(event){
     this.onChangeCallback(this._ldapModel) ;
     this.changeSelectCom.emit(event);

@@ -1,5 +1,5 @@
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
-import { Component, OnInit, ChangeDetectorRef, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, Output, EventEmitter, Input } from '@angular/core';
 import { CodeName } from "app/vo/CodeName";
 import { ServiceBroker } from "app/services/servicebroker/ServiceBroker";
 import { ApiHelloWorldHandler } from "app/services/api/ApiHelloWorldHandler";
@@ -20,8 +20,9 @@ import {Observable} from 'rxjs';
 })
 export class CiSearchComponent implements OnInit {
 
-  @Output() private formSubmit = new EventEmitter<QuerySpec>() ;
-
+  @Input() searchTitle:string ;
+  @Input() searchSubtitle:string ;
+  @Input() searchIcon:string ;
 
   doSubmit(queryForm){
     let a = queryForm.value  ;
