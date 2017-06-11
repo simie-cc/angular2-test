@@ -37,7 +37,7 @@ export class AssetComponent implements OnInit {
       },
       (error)=>{
         console.log('呼叫連線發生錯誤:'+error) ;
-        this.specService.uiErrorMsg = '登入失敗(連線錯誤): '+error ;
+        this.specService.uiErrorMsg = '連線失敗(連線錯誤): '+error ;
         this.blockUI.stop();
       }
     );
