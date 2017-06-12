@@ -41,6 +41,12 @@ export class DynamicHtmlComponent implements OnInit,ControlValueAccessor  {
   @Input() private optionsCom?:CodeName[]=[] ; //LDAP選單
   @Input() private optionsOrg?:CodeName[]=[] ; //LDAP選單
   @Input() private optionsUnit?:CodeName[]=[] ; //LDAP選單
+  @Input() private comrequired?:boolean ;
+  @Input() private orgrequired?:boolean ;
+  @Input() private unitrequired?:boolean ;
+  @Input() private comdisabled?:boolean ;
+  @Input() private orgdisabled?:boolean ;
+  @Input() private unitdisabled?:boolean ;
 
   //以下是外部使用可監聽事件
   @Output() private dateChanged = new EventEmitter() ; //當datepicker日期有變化時
@@ -93,9 +99,18 @@ export class DynamicHtmlComponent implements OnInit,ControlValueAccessor  {
   get selects():any{return this._selects ;}
   set selects(v:any){if (v != this._selects) { this._selects = v ; this.onChangeCallback(v); } }
   get dateModel():any{ return this._dateModel ; }
-  set dateModel(v:any){ if (v != this._dateModel) { this._dateModel = v ; this.onChangeCallback(v); } }
+  set dateModel(v:any){
+    if (v != this._dateModel) {
+      this._dateModel = v ; this.onChangeCallback(this._dateModel);
+    }
+  }
   get ldapModel():any{ return this._ldapModel ; }
-  set ldapModel(v:any){ if (v != this._ldapModel) { this._ldapModel = v ; this.onChangeCallback(v); } }
+  set ldapModel(v:any){
+    if (v != this._ldapModel) {
+      console.log('setModel:'+JSON.stringify(this._ldapModel)+" to "+JSON.stringify(v)) ;
+      this._ldapModel = v ; this.onChangeCallback(v);
+    }
+  }
 
   //當元件裡面的元件有動作時，也要把事件往外發送
   onInputBlur(event){ this.onChangeCallback(event.target.value); this.inputBlur.emit(event); } //發送原生事件
@@ -107,16 +122,26 @@ export class DynamicHtmlComponent implements OnInit,ControlValueAccessor  {
   onDateChanged(event){ this.onChangeCallback(this._dateModel) ; this.dateChanged.emit(event); } //發送mydate物件
   onInputFieldChanged(event){ this.onChangeCallback(this._dateModel) ; this.dateChanged.emit(event); }
   onChangeSelectCom(event){
+    this._ldapModel.org = {code:"",name:""}
+    this._ldapModel.unit = {code:"",name:""}
     this.onChangeCallback(this._ldapModel) ;
     this.changeSelectCom.emit(event);
   }
   onChangeSelectOrg(event){
+    this._ldapModel.unit = {code:"",name:""}
     this.onChangeCallback(this._ldapModel) ;
     this.changeSelectOrg.emit(event);
   }
   onChangeSelectUnit(event){
     this.onChangeCallback(this._ldapModel) ;
     this.changeSelectUnit.emit(event);
+  }
+
+  compareCodeName(e1:CodeName,e2:CodeName){
+    if(e1==null && e2!=null) return false ;
+    else if(e2==null && e1!=null) return false ;
+    else if(e1==null && e2==null) return true ;
+    else return e1.code === e2.code ;
   }
 
 }

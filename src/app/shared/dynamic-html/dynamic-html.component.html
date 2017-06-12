@@ -30,7 +30,7 @@
 
   <div class="input-group" *ngIf="dynamicType == 'SelectOneMenu'">
     <span class="input-group-addon"><i [class]="icon_clazz"></i>{{label}}</span>
-    <select class="form-control" [name]="name" [id]="id" [(ngModel)]="selected" (change)="onChangeSelectOne($event)" [disabled]="disabled" [required]="required">
+    <select class="form-control" [name]="name" [id]="id" [(ngModel)]="selected" [compareWith]="compareCodeName" (change)="onChangeSelectOne($event)" [disabled]="disabled" [required]="required">
       <option *ngFor="let option of options" [ngValue]="option">{{option.name}}</option>
     </select>
   </div>
@@ -52,7 +52,7 @@
 
   <div class="input-group" *ngIf="dynamicType == 'SelectManyMenu'">
     <span class="input-group-addon"><i [class]="icon_clazz"></i>{{label}}</span>
-    <select class="form-control" [name]="name" [(ngModel)]="selects"  (change)="onChangeSelectMany($event)" multiple [disabled]="disabled" [required]="required">
+    <select class="form-control" [name]="name" [(ngModel)]="selects" [compareWith]="compareCodeName" (change)="onChangeSelectMany($event)" multiple [disabled]="disabled" [required]="required">
       <option *ngFor="let option of options" [ngValue]="option">{{option.name}}</option>
     </select>
   </div>
@@ -75,6 +75,9 @@
   <div class="input-group" *ngIf="dynamicType == 'SelectLDAP'">
     <span class="input-group-addon"><i [class]="icon_clazz"></i>{{label}}</span>
     <ldap-menu [name]="name" [(ngModel)]="ldapModel" [optionsCom]="optionsCom" [optionsOrg]="optionsOrg" [optionsUnit]="optionsUnit"
+        [comrequired]="comrequired" [comdisabled]="comdisabeld"
+        [orgrequired]="orgrequired" [orgdisabled]="orgdisabled"
+        [unitrequired]="unitrequired" [unitdisabled]="unitdisabled"
         (changeSelectCom)="onChangeSelectCom($event)"
         (changeSelectOrg)="onChangeSelectOrg($event)"
         (changeSelectUnit)="onChangeSelectUnit($event)" ></ldap-menu>

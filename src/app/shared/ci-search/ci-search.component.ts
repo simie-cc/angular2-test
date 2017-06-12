@@ -44,7 +44,8 @@ export class CiSearchComponent implements OnInit {
     // console.log(JSON.stringify(spec));
     console.log(JSON.stringify(spec.optionsCom[e.target.selectedIndex]))
     let ldap = spec.optionsCom[e.target.selectedIndex].code.split(';') ;
-
+    spec.optionsOrg = null ;
+    spec.optionsUnit = null ;
     let api:ApiLdapHandler = this.sb.getApiHandler(ApiLdapHandler) ;
 
     this.blockUI.start('拮取LDAP資料中...')
@@ -59,6 +60,14 @@ export class CiSearchComponent implements OnInit {
           this.blockUI.stop()
         }
     );
+
+    // Observable.of([{code:"A",name:"A"},{code:"B",name:"B"}]).subscribe(
+    //   (data)=>{
+    //     spec.optionsOrg = data ;
+    //     this.blockUI.stop();
+    //   }
+    // )
+
 
   }
 
@@ -81,6 +90,13 @@ export class CiSearchComponent implements OnInit {
           this.blockUI.stop()
         }
     );
+
+    // Observable.of([{code:"C",name:"C"},{code:"D",name:"D"}]).subscribe(
+    //   (data)=>{
+    //     spec.optionsUnit = data ;
+    //     this.blockUI.stop();
+    //   }
+    // )
 
   }
 

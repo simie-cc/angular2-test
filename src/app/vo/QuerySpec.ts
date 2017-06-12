@@ -16,6 +16,12 @@ export class QuerySpec {
   optionsCom?:CodeName[] ; //LDAP選單
   optionsOrg?:CodeName[] ; //LDAP選單
   optionsUnit?:CodeName[] ; //LDAP選單
+  comrequired?:boolean ;
+  orgrequired?:boolean ;
+  unitrequired?:boolean ;
+  comdisabled?:boolean ;
+  orgdisabled?:boolean ;
+  unitdisabled?:boolean ;
 
 }
 

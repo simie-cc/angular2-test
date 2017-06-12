@@ -107,4 +107,11 @@ export class LdapMenuComponent implements OnInit, ControlValueAccessor {
     this.changeSelectUnit.emit(event) ;
   }
 
+  compareCodeName(e1:CodeName,e2:CodeName){
+    if(e1==null && e2!=null) return false ;
+    else if(e2==null && e1!=null) return false ;
+    else if(e1==null && e2==null) return true ;
+    else return e1.code === e2.code ;
+  }
+
 }
