@@ -16,7 +16,7 @@ const config: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard]},
   {path: 'asset/:page', component: AssetComponent, canActivate: [AuthGuard]},
-  {path: 'asset-registry', component: AssetRegistryComponent, canActivate: [AuthGuard]},
+  {path: 'asset-registry/:page', component: AssetRegistryComponent, canActivate: [AuthGuard]},
   {path: 'assetin', component: AssetinComponent, canActivate: [AuthGuard]},
   {path: 'assetout', component: AssetoutComponent, canActivate: [AuthGuard]},
   {path: 'assetexchange', component: AssetexchangeComponent, canActivate: [AuthGuard]},

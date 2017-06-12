@@ -67,16 +67,15 @@ export class SpecService{
   selectCIOption(event){
     console.log('現在選的是'+JSON.stringify(this.selected));
     // this.selected = this.cioptions[event.target.selectedIndex] ;
-    this.initialQueryBlock(this.selected) ;
+    if(this.page !== 'registry'){
+      this.initialQueryBlock(this.selected) ;
+    }else{
+      this.initialCreateBlock(this.selected) ;
+    }
+
   }
 
   initialQueryBlock(selectedOption:CodeName){
-    //  let fake = [
-    //     {label:'輸入帳號',dynamicType:'InputText',name:'account',required:true, p:"user"},
-    //     {label:'輸入密碼',dynamicType:'InputPasswordText',name:'password',required:true,p:"lock"},
-    //     {label:'選擇角色',dynamicType:'SelectOneMenu',name:'role',options:[{code:'1',name:'IT政策管理者'},{code:'2',name:'財產管理者'}],required:true},
-    //     {label:'多選參數',dynamicType:'SelectManyMenu',name:'param',options:[{code:'1',name:'A'},{code:'2',name:'B'},{code:'3',name:'C'},{code:'4',name:'D'}]},
-    //   ];
 
       this.blockUI.start('初始化中');
       let api = this.sb.getApiHandler(ApiSpecHandler);
@@ -93,6 +92,23 @@ export class SpecService{
         }
       ) ;
 
+  }
+
+  initialCreateBlock(selectedOption:CodeName){
+    this.blockUI.start('初始化中');
+      let api = this.sb.getApiHandler(ApiSpecHandler);
+      api.getUICreateSpec(selectedOption.code).subscribe(
+        (d:QuerySpec[])=>{
+          console.log('QuerySpec:'+JSON.stringify(d)) ;
+          this.specs = d ;
+          this.blockUI.stop()
+        },
+        (error)=>{
+          console.log('呼叫連線發生錯誤:'+error) ;
+          this.uiErrorMsg = '登入失敗(連線錯誤): '+error ;
+          this.blockUI.stop()
+        }
+      ) ;
   }
 
 }

@@ -15,7 +15,7 @@ export class AssetComponent implements OnInit {
 
   @BlockUI() blockUI: NgBlockUI;
 
-  constructor(private queryAssetService:QueryAssetService,private specService:SpecService,private router: ActivatedRoute,) { }
+  constructor(private queryAssetService:QueryAssetService,private specService:SpecService,private router: ActivatedRoute) { }
 
   ngOnInit() {
     //第一次進入頁面

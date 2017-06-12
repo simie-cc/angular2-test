@@ -23,7 +23,7 @@ export class ServiceBroker{
     let classDesc = Reflect.getMetadata(REST_METADATA, clazz); //從這個class上取得rest的metadata
     //console.log('classMetadata:'+JSON.stringify(classDesc)) ; //{"baseUrl":"/api"}
 
-    let url = this.getHostUri()+classDesc.baseUrl; //http://localhost:8080/api
+    let url = this.getHostUri(className)+classDesc.baseUrl; //http://localhost:8080/api
 
     //回傳代理
     let proxy = <T> new Proxy({},{
@@ -69,7 +69,8 @@ export class ServiceBroker{
 
   }
 
-  private getHostUri():string {
+  //傳入className可以當條件呼叫不同apiserver
+  private getHostUri(className:string):string {
     return environment.apiserver ;
   }
 

@@ -15,4 +15,11 @@ export class ApiSpecHandler{
   @RequestMapping({path:"/uiqueryspec/{0}",method:HttpMethod.GET})
   getUIQuerySpec(selectedCI:string):Observable<any>{return null;}
 
+  //依據選擇的CI種類查詢對應的規格
+  @RequestMapping({path:"/uicreatespec/{0}",method:HttpMethod.GET})
+  getUICreateSpec(selectedCI:string):Observable<any>{return null;}
+
+  @RequestMapping({path:"/uioption/companies",method:HttpMethod.GET})
+  getCompaniesOptions(){return null;}
+
 }

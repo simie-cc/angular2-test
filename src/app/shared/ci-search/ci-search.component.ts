@@ -8,6 +8,7 @@ import { QuerySpec } from "app/vo/QuerySpec";
 import { LDAP } from "app/vo/LDAP";
 import 'rxjs/Rx';
 import {Observable} from 'rxjs';
+import { ApiLdapHandler } from "app/services/api/ApiLdapHandler";
 
 /**
  * 顯示 Configuration Item 查詢區塊
@@ -27,14 +28,13 @@ export class CiSearchComponent implements OnInit {
 
   @Output() formSubmit = new EventEmitter() ;
 
+  @BlockUI() blockUI: NgBlockUI;
+
   doSubmit(queryForm){
-    // let a = queryForm.value  ;
-    // console.log('送出去的資料:'+JSON.stringify(a));
-    // console.log('目前選擇的CI種類:'+JSON.stringify(this.specService.selected)) ;
     this.formSubmit.emit(queryForm) ;
     queryForm.reset() ;
   }
-  constructor(private specService:SpecService) { }
+  constructor(private specService:SpecService,private sb:ServiceBroker,) { }
 
   ngOnInit() {
 
@@ -43,11 +43,21 @@ export class CiSearchComponent implements OnInit {
   selectCom(e,spec){
     // console.log(JSON.stringify(spec));
     console.log(JSON.stringify(spec.optionsCom[e.target.selectedIndex]))
-    Observable.of([{"code":"4","name":"D"},{"code":"5","name":"E"},{"code":"6","name":"F"}]).delay(1000).subscribe(
-      (d)=>{
-        console.log('data1 is coming');
-        spec.optionsOrg = d ;
-      }
+    let ldap = spec.optionsCom[e.target.selectedIndex].code.split(';') ;
+
+    let api:ApiLdapHandler = this.sb.getApiHandler(ApiLdapHandler) ;
+
+    this.blockUI.start('拮取LDAP資料中...')
+    api.getChtUnitsForUI(ldap[0],ldap[1]).subscribe(
+      (data)=>{
+        spec.optionsOrg = data ;
+        this.blockUI.stop();
+      },
+      (error)=>{
+          console.log('呼叫連線發生錯誤:'+error) ;
+          this.specService.uiErrorMsg = '登入失敗(連線錯誤): '+error ;
+          this.blockUI.stop()
+        }
     );
 
   }
@@ -55,11 +65,21 @@ export class CiSearchComponent implements OnInit {
   selectOrg(e,spec){
     // console.log(JSON.stringify(spec));
     console.log(JSON.stringify(spec.optionsOrg[e.target.selectedIndex]))
-    Observable.of([{"code":"7","name":"G"},{"code":"8","name":"H"},{"code":"9","name":"I"}]).delay(1000).subscribe(
-      (d)=>{
-        console.log('data2 is coming');
-        spec.optionsUnit = d ;
-      }
+    let ldap = spec.optionsOrg[e.target.selectedIndex].code.split(';') ;
+
+    let api:ApiLdapHandler = this.sb.getApiHandler(ApiLdapHandler) ;
+
+    this.blockUI.start('拮取LDAP資料中...')
+    api.getChtUnitsForUI(ldap[0],ldap[1]).subscribe(
+      (data)=>{
+        spec.optionsUnit = data ;
+        this.blockUI.stop();
+      },
+      (error)=>{
+          console.log('呼叫連線發生錯誤:'+error) ;
+          this.specService.uiErrorMsg = '登入失敗(連線錯誤): '+error ;
+          this.blockUI.stop()
+        }
     );
 
   }
