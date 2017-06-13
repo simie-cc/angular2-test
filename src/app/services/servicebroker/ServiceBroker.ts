@@ -49,11 +49,16 @@ export class ServiceBroker{
                   console.log('call get method:'+fullUrl) ;
                   return rest.get(fullUrl,timeout) ;
               }else if(httpMethod === HttpMethod.POST){
-                  console.log('call post method:'+fullUrl+', and data:'+JSON.stringify(args[0])) ;
-                  return rest.post(fullUrl,args[0],timeout) ;
+                  let m = fullUrl.match(`{.*}`)
+                  let dataidx = m? m.length : 0 ;
+                  args.forEach( (arg,idx)=> fullUrl=fullUrl.replace(`{${idx}}`,arg) )  //依序取代掉網址上的變數
+                  console.log('call post method:'+fullUrl+', and data:'+JSON.stringify(args[dataidx])) ; //取變數之後的資料
+                  return rest.post(fullUrl,args[dataidx],timeout) ;
               }else if(httpMethod === HttpMethod.PUT){
-                  console.log('call put method:'+fullUrl+', and data:'+JSON.stringify(args[0])) ;
-                  return rest.put(fullUrl,args[0],timeout) ;
+                  let m = fullUrl.match(`{.*}`)
+                  let dataidx = m? m.length : 0 ;
+                  console.log('call put method:'+fullUrl+', and data:'+JSON.stringify(args[dataidx])) ;
+                  return rest.put(fullUrl,args[dataidx],timeout) ;
               }else if(httpMethod === HttpMethod.GET){
                   args.forEach( (arg,idx)=> fullUrl=fullUrl.replace(`{${idx}}`,arg) )  //依序取代掉網址上的變數
                   console.log('call delete method:'+fullUrl) ;

@@ -35,6 +35,7 @@ export class AuthService{
 
     authHandler.auth(loginUser).subscribe(
       (data:LoginUser) => {
+        console.log('data:'+JSON.stringify(data)) ;
         let backdoorRoles = this.loginUser.roles ; //若從後門點選角色
         this.loginUser = data ; //存進來
 
@@ -48,10 +49,11 @@ export class AuthService{
           console.log('[token is expired]: '+this.jwt.isTokenExpired(data.token));
           console.log('↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ token information ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑');
           this.loginUser.roles = JSON.parse(this.jwt.decodeToken(data.token).roles) ;
+          this.loginUser.name = this.jwt.decodeToken(data.token).name ;
           // console.log('後門選擇'+JSON.stringify(backdoorRoles));
           if(backdoorRoles) this.loginUser.roles = backdoorRoles ; //蓋回去
           // console.log('蓋回去'+JSON.stringify(this.loginUser.roles));
-
+          console.log('登入資料:'+JSON.stringify(this.loginUser));
           this.router.navigate(['dashboard']);
         }else{
           this.uiErrorMsg = '登入失敗: '+data.msg ;

@@ -4,9 +4,38 @@
     searchTitle="查詢區塊" searchSubtitle="查詢資產種類"
     searchBtnName="開始查詢" (formSubmit)="searchSubmit($event)" ></ci-search>
 
-<!--<ngx-datatable
-        [rows]="rows"
-        [columns]="columns">
-</ngx-datatable>-->
 
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <icon p="list-alt"></icon> 查詢結果
+  </div>
+  <div class="panel-body">
+
+
+
+    <ul class="nav nav-tabs">
+      <li [class.active]="tabName == 1" ><a class="nav-link" (click)="getData1();">終端資產</a></li>
+      <li [class.active]="tabName == 2" ><a class="nav-link" (click)="getData2()">其它資產</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <ngx-datatable class="bootstrap"
+                [rows]="rows"
+                [columns]="columns"
+                [columnMode]="'force'"
+                [headerHeight]="50"
+                [footerHeight]="30"
+                [rowHeight]="'auto'"
+                [scrollbarH]="true"
+                [selected]="selected"
+                [selectionType]="'single'"
+                (select)="onSelect($event)"
+                >
+        </ngx-datatable>
+    </div>
+
+  </div>
+</div>
+
+<br><br><br><br>
 </div>

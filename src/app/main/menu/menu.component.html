@@ -71,7 +71,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown" submenu>
-          <a class="dropdown-toggle"><icon p="user"></icon>{{authService.user?.roles[0].name}} <span class="caret"></span></a>
+          <a class="dropdown-toggle"><icon p="user"></icon>{{authService.user?.name}} <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li *ngFor="let item of authService.user?.roles;let i=index;let f=first"><a >{{item.name}}</a></li>
           </ul>

@@ -5,6 +5,8 @@ import { ActivatedRoute } from "@angular/router";
 import { BlockUI, NgBlockUI } from "ng-block-ui";
 import 'rxjs/Rx';
 import {Observable} from 'rxjs';
+import { ServiceBroker } from "app/services/servicebroker/ServiceBroker";
+import { ApiCiRelationdHandler } from "app/services/api/ApiCiRelationHandler";
 
 @Component({
   selector: 'asset',
@@ -15,7 +17,18 @@ export class AssetComponent implements OnInit {
 
   @BlockUI() blockUI: NgBlockUI;
 
-  constructor(private queryAssetService:QueryAssetService,private specService:SpecService,private router: ActivatedRoute) { }
+  //test
+  rows:any ;
+  columns:any;
+  selected:any[] = [];
+  datas:any[] =[ {rows:null,columns:null} ];
+  tabName:number = 1 ;
+
+
+  constructor(private queryAssetService:QueryAssetService,
+              private specService:SpecService,
+              private router: ActivatedRoute,
+              private sb:ServiceBroker) { }
 
   ngOnInit() {
     //第一次進入頁面
@@ -48,6 +61,55 @@ export class AssetComponent implements OnInit {
     console.log('送出去的資料:'+JSON.stringify(a));
     console.log('目前選擇的CI種類:'+JSON.stringify(this.specService.selected)) ;
     queryForm.reset() ;
+    this.queryCiData(a) ;
+  }
+
+  queryCiData(data){
+    let api:ApiCiRelationdHandler = this.sb.getApiHandler(ApiCiRelationdHandler) ;
+    api.queryCiData(this.specService.selected.code, data).subscribe(
+      (resp)=>{
+
+        console.log(JSON.stringify(resp.tabName))
+        this.columns = resp.tabs[0].columns ; //[{ "name": '名稱',"prop":"name" },{ "name": '性別',"prop":"gender" },{ "name": '公司',"prop":"company" }] ;
+        this.rows = resp.tabs[0].rows; //[{ "name": "Ethel Price","gender": "female", "company": "Johnson, Johnson and Partners, LLC CMP DDC", "age": 22 }] ;
+        console.log('done');
+        this.datas[0].rows = resp.tabs[0].rows ;
+        this.datas[0].columns = resp.tabs[0].columns ;
+      },
+      (error)=>{
+        console.log('error:'+error);
+      }
+    ) ;
+  }
+
+  onSelect(event){
+    console.log(event);
+    console.log(JSON.stringify(this.selected[0]));
+  }
+
+  getData1(){
+    this.tabName = 1 ;
+    console.log(JSON.stringify(this.datas[0]));
+    this.columns = this.datas[0].columns ;
+    this.rows = this.datas[0].rows ;
+  }
+
+  getData2(){
+    this.tabName = 2 ;
+    this.columns = [{ prop: 'name'} , { name: 'Company' }, { name: 'Gender' }]  ;
+    this.rows = [
+      {
+        "name": "Ethel Price",
+        "gender": "female",
+        "company": "Johnson, Johnson and Partners, LLC CMP DDC",
+        "age": 22
+    },
+    {
+        "name": "Claudine Neal",
+        "gender": "female",
+        "company": "Sealoud",
+        "age": 55
+    },]  ;
   }
 
 }

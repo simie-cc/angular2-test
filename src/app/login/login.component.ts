@@ -41,8 +41,10 @@ export class LoginComponent implements OnInit {
   }
 
   doLogin(loginForm:NgForm){
+
     if(this.roleSelect.length>0) this.authService.user.roles = this.roleSelect ;
     this.authService.auth(loginForm.value) ;
+
   }
 
   clickRole(btn:HTMLButtonElement){
@@ -60,21 +62,6 @@ export class LoginComponent implements OnInit {
     }
 
   }
-
-  //===========test
-
-
-
-  // private optionsCom = [{code:"1",name:"A"},{code:"2",name:"B"},{code:"3",name:"C"}] ;
-  // private optionsOrg = [{code:"4",name:"D"},{code:"5",name:"E"},{code:"6",name:"F"}] ;
-  // private optionsUnit = [{code:"7",name:"G"},{code:"8",name:"H"},{code:"9",name:"I"}] ;
-  // private testModel:LDAP = { com:this.optionsCom[2], org:this.optionsOrg[2], unit:this.optionsUnit[2] };
-
-  // testSelectEvent(event){
-  //   console.log(this.testModel);
-  // }
-
-
 
 
 }
