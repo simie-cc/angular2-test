@@ -5,8 +5,8 @@
 
 .input-group .input-group-addon{
     color: rgb(255, 255, 255);
-    background-color: rgb(92, 184, 92);
-    border-color: rgb(76, 174, 76);
+    background-color: rgb(50, 118, 177);
+    border-color: rgb(40, 94, 142);
 }
 
 .input-group-addon.primary {
@@ -142,4 +142,10 @@
 
 .input-group .input-group-addon {
     min-width:110px;
+}
+
+.column2{
+  -webkit-column-count: 2; /* Chrome, Safari, Opera */
+    -moz-column-count: 2; /* Firefox */
+    column-count: 2;
 }

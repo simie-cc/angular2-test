@@ -22,7 +22,8 @@ export class AssetComponent implements OnInit {
   columns:any;
   selected:any[] = [];
   datas:any[] =[ {rows:null,columns:null} ];
-  tabName:number = 1 ;
+  selectTab:string ;
+  tabNames:string[] =['test','other'] ;
 
 
   constructor(private queryAssetService:QueryAssetService,
@@ -65,19 +66,25 @@ export class AssetComponent implements OnInit {
   }
 
   queryCiData(data){
+    this.blockUI.start("查詢資料中...")
     let api:ApiCiRelationdHandler = this.sb.getApiHandler(ApiCiRelationdHandler) ;
     api.queryCiData(this.specService.selected.code, data).subscribe(
       (resp)=>{
+        if(resp.tabs && resp.tabName){
+          console.log(JSON.stringify(resp.tabName[0]))
+          this.tabNames[0] = resp.tabName[0] ;
+          this.columns = resp.tabs[0].columns ; //[{ "name": '名稱',"prop":"name" },{ "name": '性別',"prop":"gender" },{ "name": '公司',"prop":"company" }] ;
+          this.rows = resp.tabs[0].rows; //[{ "name": "Ethel Price","gender": "female", "company": "Johnson, Johnson and Partners, LLC CMP DDC", "age": 22 }] ;
+          console.log('done');
+          this.datas[0].rows = resp.tabs[0].rows ;
+          this.datas[0].columns = resp.tabs[0].columns ;
+        }
 
-        console.log(JSON.stringify(resp.tabName))
-        this.columns = resp.tabs[0].columns ; //[{ "name": '名稱',"prop":"name" },{ "name": '性別',"prop":"gender" },{ "name": '公司',"prop":"company" }] ;
-        this.rows = resp.tabs[0].rows; //[{ "name": "Ethel Price","gender": "female", "company": "Johnson, Johnson and Partners, LLC CMP DDC", "age": 22 }] ;
-        console.log('done');
-        this.datas[0].rows = resp.tabs[0].rows ;
-        this.datas[0].columns = resp.tabs[0].columns ;
+        this.blockUI.stop() ;
       },
       (error)=>{
         console.log('error:'+error);
+        this.blockUI.stop() ;
       }
     ) ;
   }
@@ -87,29 +94,30 @@ export class AssetComponent implements OnInit {
     console.log(JSON.stringify(this.selected[0]));
   }
 
-  getData1(){
-    this.tabName = 1 ;
-    console.log(JSON.stringify(this.datas[0]));
-    this.columns = this.datas[0].columns ;
-    this.rows = this.datas[0].rows ;
+  getData(tab){
+    this.selectTab = tab ;
+    if(this.selectTab == 'other'){
+        this.columns = [{ prop: 'name.value' , name:'姓名'} , { name: 'Company' }, { name: 'Gender' }]  ;
+        this.rows = [
+          {
+            "name": {code:'haha',value:'hahaha'},
+            "gender": "female",
+            "company": "Johnson, Johnson and Partners, LLC CMP DDC",
+            "age": 22
+        },
+        {
+            "name": {code:'haha2',value:'hahaha2'},
+            "gender": "female",
+            "company": "Sealoud",
+            "age": 55
+        },]  ;
+    }else{
+      console.log(JSON.stringify(this.datas[0]));
+      this.columns = this.datas[0].columns ;
+      this.rows = this.datas[0].rows ;
+    }
+
   }
 
-  getData2(){
-    this.tabName = 2 ;
-    this.columns = [{ prop: 'name'} , { name: 'Company' }, { name: 'Gender' }]  ;
-    this.rows = [
-      {
-        "name": "Ethel Price",
-        "gender": "female",
-        "company": "Johnson, Johnson and Partners, LLC CMP DDC",
-        "age": 22
-    },
-    {
-        "name": "Claudine Neal",
-        "gender": "female",
-        "company": "Sealoud",
-        "age": 55
-    },]  ;
-  }
 
 }

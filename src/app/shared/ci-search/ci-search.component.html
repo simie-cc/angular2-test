@@ -16,27 +16,78 @@
 
     <form #queryForm="ngForm" (submit)="doSubmit(queryForm)">
 
-        <div class="form-group" *ngFor="let spec of specService.specs">
-          <!--{{spec|json}}-->
-          <dynamic-html [label]="spec.label"
-                        [dynamicType]="spec.dynamicType"
-                        [name]="spec.name"
-                        [options]="spec.options"
-                        [dateOptions]="spec.dateOptions"
-                        [required]="spec.required"
-                        [disabled]="spec.disabled"
-                        [placeholder]="spec.placeholder"
-                        [optionsCom]="spec.optionsCom"
-                        [optionsOrg]="spec.optionsOrg"
-                        [optionsUnit]="spec.optionsUnit"
-                        [comrequired]="spec.comrequired" [comdisabled]="spec.comdisabeld"
-                        [orgrequired]="spec.orgrequired" [orgdisabled]="spec.orgdisabled"
-                        [unitrequired]="spec.unitrequired" [unitdisabled]="spec.unitdisabled"
-                        [p]="spec.p"
+        <div class="form-group" *ngFor="let spec of specService.specs;let isEven=even;let i=index; let isLast=last">
+          <div *ngIf="isEven && !isLast" style="width: 100%" >
+            <div  style="width: 50%; float: left; display: inline-block;">
+                <dynamic-html [label]="specService.specs[i].label"
+                        [dynamicType]="specService.specs[i].dynamicType"
+                        [name]="specService.specs[i].name"
+                        [options]="specService.specs[i].options"
+                        [dateOptions]="specService.specs[i].dateOptions"
+                        [required]="specService.specs[i].required"
+                        [disabled]="specService.specs[i].disabled"
+                        [placeholder]="specService.specs[i].placeholder"
+                        [optionsCom]="specService.specs[i].optionsCom"
+                        [optionsOrg]="specService.specs[i].optionsOrg"
+                        [optionsUnit]="specService.specs[i].optionsUnit"
+                        [comrequired]="specService.specs[i].comrequired" [comdisabled]="specService.specs[i].comdisabeld"
+                        [orgrequired]="specService.specs[i].orgrequired" [orgdisabled]="specService.specs[i].orgdisabled"
+                        [unitrequired]="specService.specs[i].unitrequired" [unitdisabled]="specService.specs[i].unitdisabled"
+                        [p]="specService.specs[i].p"
                          ngModel
-                          (changeSelectCom)="selectCom($event,spec)"
-                          (changeSelectOrg)="selectOrg($event,spec)">
-           </dynamic-html>
+                          (changeSelectCom)="selectCom($event,specService.specs[i])"
+                          (changeSelectOrg)="selectOrg($event,specService.specs[i])">
+                </dynamic-html>
+            </div>
+            <div style="width: 49%; display: inline-block;margin-left:5px;">
+                <dynamic-html [label]="specService.specs[i+1].label"
+                        [dynamicType]="specService.specs[i+1].dynamicType"
+                        [name]="specService.specs[i+1].name"
+                        [options]="specService.specs[i+1].options"
+                        [dateOptions]="specService.specs[i+1].dateOptions"
+                        [required]="specService.specs[i+1].required"
+                        [disabled]="specService.specs[i+1].disabled"
+                        [placeholder]="specService.specs[i+1].placeholder"
+                        [optionsCom]="specService.specs[i+1].optionsCom"
+                        [optionsOrg]="specService.specs[i+1].optionsOrg"
+                        [optionsUnit]="specService.specs[i+1].optionsUnit"
+                        [comrequired]="specService.specs[i+1].comrequired" [comdisabled]="specService.specs[i+1].comdisabeld"
+                        [orgrequired]="specService.specs[i+1].orgrequired" [orgdisabled]="specService.specs[i+1].orgdisabled"
+                        [unitrequired]="specService.specs[i+1].unitrequired" [unitdisabled]="specService.specs[i+1].unitdisabled"
+                        [p]="specService.specs[i+1].p"
+                         ngModel
+                          (changeSelectCom)="selectCom($event,specService.specs[i+1])"
+                          (changeSelectOrg)="selectOrg($event,specService.specs[i+1])">
+                </dynamic-html>
+            </div>
+          </div>
+
+
+          <div *ngIf="isLast" style="width: 100%" >
+            <div  style="width: 50%; display: inline-block;">
+                <dynamic-html [label]="specService.specs[i].label"
+                        [dynamicType]="specService.specs[i].dynamicType"
+                        [name]="specService.specs[i].name"
+                        [options]="specService.specs[i].options"
+                        [dateOptions]="specService.specs[i].dateOptions"
+                        [required]="specService.specs[i].required"
+                        [disabled]="specService.specs[i].disabled"
+                        [placeholder]="specService.specs[i].placeholder"
+                        [optionsCom]="specService.specs[i].optionsCom"
+                        [optionsOrg]="specService.specs[i].optionsOrg"
+                        [optionsUnit]="specService.specs[i].optionsUnit"
+                        [comrequired]="specService.specs[i].comrequired" [comdisabled]="specService.specs[i].comdisabeld"
+                        [orgrequired]="specService.specs[i].orgrequired" [orgdisabled]="specService.specs[i].orgdisabled"
+                        [unitrequired]="specService.specs[i].unitrequired" [unitdisabled]="specService.specs[i].unitdisabled"
+                        [p]="specService.specs[i].p"
+                         ngModel
+                          (changeSelectCom)="selectCom($event,specService.specs[i])"
+                          (changeSelectOrg)="selectOrg($event,specService.specs[i])">
+                </dynamic-html>
+            </div>
+          </div>
+
+
         </div>
 
         <div align="center">
