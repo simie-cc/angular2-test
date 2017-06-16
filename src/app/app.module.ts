@@ -1,7 +1,7 @@
 //以下是內建
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 //以下是第三方
@@ -39,6 +39,8 @@ import { QueryAssetService } from "app/services/service/QueryAssetService";
 import { AssetinComponent } from './main/idc/assetin/assetin.component';
 import { AssetoutComponent } from './main/idc/assetout/assetout.component';
 import { AssetexchangeComponent } from './main/idc/assetexchange/assetexchange.component';
+import { LdapPickerComponent } from './shared/ldap-picker/ldap-picker.component';
+import { TestRectiveFormComponent } from './shared/test-rective-form/test-rective-form.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +58,9 @@ import { AssetexchangeComponent } from './main/idc/assetexchange/assetexchange.c
     LdapMenuComponent,
     AssetinComponent,
     AssetoutComponent,
-    AssetexchangeComponent
+    AssetexchangeComponent,
+    LdapPickerComponent,
+    TestRectiveFormComponent
   ],
   imports: [
     BrowserModule,
@@ -69,7 +73,8 @@ import { AssetexchangeComponent } from './main/idc/assetexchange/assetexchange.c
     }),
     BlockUIModule,
     NgxDatatableModule,
-    MyDatePickerModule
+    MyDatePickerModule,
+    ReactiveFormsModule
   ],
   providers: [
     ServiceBroker,
