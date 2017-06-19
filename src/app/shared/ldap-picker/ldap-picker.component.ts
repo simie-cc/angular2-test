@@ -33,12 +33,12 @@ export class LdapPickerComponent implements OnInit,ControlValueAccessor{
   }
 
   optionsCom:{code:string,name:string}[] =[
-    {code:'o=cht;0000',name:'=====請選擇====='},
+    {code:'o=cht;0000',name:'==============請選擇==============='},
     {code:'o=cht,c=tw;0100',name:'中華電信公司'},
     {code:'o=cht,c=tw;8080',name:'中華電信研究院'}
   ] ;
-  optionsOrg:{code:string,name:string}[] ;
-  optionsUnit:{code:string,name:string}[] ;
+  optionsOrg:{code:string,name:string}[] = [{code:'o=cht;0000',name:'==============請選擇==============='}] ;
+  optionsUnit:{code:string,name:string}[] = [{code:'o=cht;0000',name:'==============請選擇==============='}] ;
 
   constructor(private sb:ServiceBroker) { }
 
@@ -52,15 +52,22 @@ export class LdapPickerComponent implements OnInit,ControlValueAccessor{
   onChangeSelectCom(event){
     let api:ApiLdapHandler = this.sb.getApiHandler(ApiLdapHandler)
     let splits = this._model.com.code.split(";")
-    api.getChtUnitsForUI(splits[0],splits[1]).subscribe(
-      (orgOptions:{code:string,name:string}[])=>{
-        console.log('收到資料:'+JSON.stringify(orgOptions))
-        this.optionsOrg = orgOptions ;
-      },
-      (error)=>{
-        //TODO 發出error事件
-      }
-    )
+    if(splits[1] === '0000') {
+      this._model.org = {code:'o=cht;0000',name:'==============請選擇==============='}
+      this.optionsOrg = [{code:'o=cht;0000',name:'==============請選擇==============='}]
+    }else{
+      api.getChtUnitsForUI(splits[0],splits[1]).subscribe(
+        (orgOptions:{code:string,name:string}[])=>{
+          console.log('收到資料:'+JSON.stringify(orgOptions))
+          this.optionsOrg = orgOptions ;
+        },
+        (error)=>{
+          //TODO 發出error事件
+        }
+      )
+    }
+    this._model.unit = {code:'o=cht;0000',name:'==============請選擇==============='}
+    this.optionsUnit = [{code:'o=cht;0000',name:'==============請選擇==============='}]
     this.onChangeCallback(this._model);
     this.changeSelectCom.emit(event);
   }
@@ -68,15 +75,21 @@ export class LdapPickerComponent implements OnInit,ControlValueAccessor{
   onChangeSelectOrg(event){
     let api:ApiLdapHandler = this.sb.getApiHandler(ApiLdapHandler)
     let splits = this._model.org.code.split(";")
-    api.getChtUnitsForUI(splits[0],splits[1]).subscribe(
-      (unitOptions:{code:string,name:string}[])=>{
-        console.log('收到資料:'+JSON.stringify(unitOptions))
-        this.optionsUnit = unitOptions ;
-      },
-      (error)=>{
-        //TODO 發出error事件
-      }
-    )
+    if(splits[1] === '0000'){
+      this._model.unit = {code:'o=cht;0000',name:'==============請選擇==============='}
+      this.optionsUnit = [{code:'o=cht;0000',name:'==============請選擇==============='}]
+    }else{
+      api.getChtUnitsForUI(splits[0],splits[1]).subscribe(
+        (unitOptions:{code:string,name:string}[])=>{
+          console.log('收到資料:'+JSON.stringify(unitOptions))
+          this.optionsUnit = unitOptions ;
+        },
+        (error)=>{
+          //TODO 發出error事件
+        }
+      )
+    }
+
     this.onChangeCallback(this._model);
     this.changeSelectOrg.emit(event) ;
   }
