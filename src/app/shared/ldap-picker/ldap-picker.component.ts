@@ -27,10 +27,10 @@ export class LdapPickerComponent implements OnInit,ControlValueAccessor{
     org:{code:string,name:string},
     unit:{code:string,name:string}
   } = {
-    com:{code:'',name:''},
-    org:{code:'',name:''},
-    unit:{code:'',name:''}
-  }
+    com:{code:'o=cht;0000',name:'==============請選擇==============='},
+    org:{code:'o=cht;0000',name:'==============請選擇==============='},
+    unit:{code:'o=cht;0000',name:'==============請選擇==============='}
+  };
 
   optionsCom:{code:string,name:string}[] =[
     {code:'o=cht;0000',name:'==============請選擇==============='},
@@ -43,6 +43,7 @@ export class LdapPickerComponent implements OnInit,ControlValueAccessor{
   constructor(private sb:ServiceBroker) { }
 
   ngOnInit() {
+
   }
 
   @Output() private changeSelectCom = new EventEmitter() ;

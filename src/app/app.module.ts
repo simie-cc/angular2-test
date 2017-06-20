@@ -41,6 +41,7 @@ import { AssetoutComponent } from './main/idc/assetout/assetout.component';
 import { AssetexchangeComponent } from './main/idc/assetexchange/assetexchange.component';
 import { LdapPickerComponent } from './shared/ldap-picker/ldap-picker.component';
 import { TestRectiveFormComponent } from './shared/test-rective-form/test-rective-form.component';
+import { TestTemplateFormComponent } from './shared/test-template-form/test-template-form.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { TestRectiveFormComponent } from './shared/test-rective-form/test-rectiv
     AssetoutComponent,
     AssetexchangeComponent,
     LdapPickerComponent,
-    TestRectiveFormComponent
+    TestRectiveFormComponent,
+    TestTemplateFormComponent
   ],
   imports: [
     BrowserModule,
